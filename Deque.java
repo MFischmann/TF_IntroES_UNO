@@ -1,7 +1,7 @@
 import java.util.Random;
 
 public class Deque{
-    DoubleLinkedListOfCards deck;
+    private DoubleLinkedListOfCards deck;
 
     public Deque(){
         deck = new DoubleLinkedListOfCards();
@@ -21,7 +21,7 @@ public class Deque{
      */
     public String printDeque(){
         //TODO
-        String s;
+        String s ="";
 
         return s;
     }

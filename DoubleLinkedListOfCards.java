@@ -1,7 +1,10 @@
-public class DoubleLinkedListOfCards{
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class DoubleLinkedListOfCards implements Iterable<Card>{
     private Node header;
     private Node trailer;
-    int count;
+    private int count;
 
     private class Node {
         public Card element;
@@ -12,6 +15,22 @@ public class DoubleLinkedListOfCards{
             next = null;
             prev = null;
         }
+    }
+    public class DoubleListIterator implements Iterator<Card> {
+        // instance variable
+        private Node current = header.next;
+        
+        public boolean hasNext() {
+          return current.next != null;
+        }
+        public Card next() {
+            if (!hasNext()) throw new NoSuchElementException();
+            Card atual = current.element;
+            current = current.next;  // if next is null, hasNext will return false.
+            return atual;
+    
+        }
+        public void remove() { throw new UnsupportedOperationException(); }
     }
 
     public DoubleLinkedListOfCards(){
@@ -102,4 +121,10 @@ public class DoubleLinkedListOfCards{
     public int size(){
         return count;
     }
+
+    @Override
+    public DoubleListIterator iterator() {
+        return new DoubleListIterator();
+    }
+
 }
