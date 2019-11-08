@@ -20,4 +20,11 @@ public class Card{
     public String getCor() {
         return cor;
     }
+    /**
+     * Metodo toString para printar resultados
+     */
+    @Override
+    public String toString() {
+        return valor+" "+cor;
+    }
 }
