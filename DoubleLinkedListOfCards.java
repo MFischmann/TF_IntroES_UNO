@@ -26,7 +26,40 @@ public class DoubleLinkedListOfCards{
      * @param element
      */
     public void add(Card element){
-        //TODO
+	// Cria o nodo
+    Node n = new Node(element);
+		
+    // Atualiza as referencias do nodo criado para liga-lo na lista
+    Node last = trailer.prev;
+    n.prev = last;
+    n.next = trailer;
+    
+    // Atualiza as referencias para incluir o nodo criado
+    last.next = n;
+    trailer.prev = n;
+    
+    // Atualiza o contador
+    count++;       
+    }
+    /**
+     * Metodo otimizado para obter referencia a um nodo
+     * @param index posicao do nodo
+     * @return o nodo desejado
+     */
+    private Node getRefNode(int index) {
+        Node aux = null;
+        if (index <= count / 2) {
+            aux = header.next;
+            for (int i = 0; i < index; i++) {
+                aux = aux.next;
+            }
+        } else {
+            aux = trailer.prev;
+            for (int i = count - 1; i > index; i--) {
+                aux = aux.prev;
+            }
+        }
+        return aux;       
     }
     /**
      * Remove Card da posicao index e a retorna
@@ -35,10 +68,16 @@ public class DoubleLinkedListOfCards{
      * @throws IndexOutOfBoundsException se posicao inexiste
      */
     public Card remove(int index){
-        //TODO
-        if(index < 0 || index > count){
+        if(index < 0 || index >= count){
             throw new IndexOutOfBoundsException("Valor invalido de index.");
         }
+
+        Node n = getRefNode(index);
+
+        n.prev.next = n.next;
+        n.next.prev = n.prev; 
+        count--;
+        return n.element;
     }
 
         /**
@@ -48,10 +87,13 @@ public class DoubleLinkedListOfCards{
      * @throws IndexOutOfBoundsException se posicao inexiste
      */
     public Card getCard(int index){
-        //TODO
-        if(index < 0 || index > count){
+        if(index < 0 || index >= count){
             throw new IndexOutOfBoundsException("Valor invalido de index.");
         }
+
+        Node n = getRefNode(index);
+
+        return n.element;
     }
     /**
      * Retorna tamanho da lista
