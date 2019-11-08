@@ -20,7 +20,6 @@ public class Deque extends DoubleLinkedListOfCards{
      * @return s
      */
     public String printDeque(){
-        //TODO
         String s ="";
         for (Card card : this) {
             s = s + card.toString()+"\n";

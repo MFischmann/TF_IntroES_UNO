@@ -121,6 +121,21 @@ public class DoubleLinkedListOfCards implements Iterable<Card>{
     public int size(){
         return count;
     }
+    /**
+     * Informa se lista esta vazia
+     * @return true se vazio e false se ha elementos
+     */
+    public boolean isEmpty(){
+        return count==0;
+    }
+    /**
+     * Limpa a lista
+     */
+    public void clear(){
+        header.next = trailer;
+        trailer.prev = header;
+        count = 0;
+    }
 
     @Override
     public DoubleListIterator iterator() {
