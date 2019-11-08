@@ -1,10 +1,10 @@
 import java.util.Random;
 
-public class Deque{
+public class Deque extends DoubleLinkedListOfCards{
     private DoubleLinkedListOfCards deck;
 
     public Deque(){
-        deck = new DoubleLinkedListOfCards();
+        super();
     }
     /**
      * Retorna uma carta aleatoria de deck
@@ -13,7 +13,7 @@ public class Deque{
     public Card compraCard(){
         Random r = new Random();
         int randomIndex = r.nextInt(deck.size());
-        return deck.remove(randomIndex);
+        return super.remove(randomIndex);
     }
     /**
      * Retorna uma string contendo a informacao de todas as cartas contidas em deck
@@ -22,7 +22,9 @@ public class Deque{
     public String printDeque(){
         //TODO
         String s ="";
-
+        for (Card card : this) {
+            s = s + card.toString()+"\n";
+        }
         return s;
     }
 }
