@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Deque{
     DoubleLinkedListOfCards deck;
 
@@ -9,7 +11,9 @@ public class Deque{
      * @return A carta aleatoria
      */
     public Card compraCard(){
-        //TODO
+        Random r = new Random();
+        int randomIndex = r.nextInt(deck.size());
+        return deck.remove(randomIndex);
     }
     /**
      * Retorna uma string contendo a informacao de todas as cartas contidas em deck
@@ -17,5 +21,8 @@ public class Deque{
      */
     public String printDeque(){
         //TODO
+        String s;
+
+        return s;
     }
 }
