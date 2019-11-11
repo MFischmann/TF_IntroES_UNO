@@ -15,7 +15,15 @@ public class Jogo{
         IDcounter++;
         currentCor = "N/A";
         currentValor = "N/A";
-        jogaCarta(deck.compraCard()); //usa carta aleatoria para inicializar a partida
+
+        Card c = deck.compraCard(); //usa carta aleatoria para inicializar a partida
+        
+        while(c.getValor().equals("+4")){ //enquanto a carta do topo for +4 coringa reembaralha e compra outra carta
+            deck.add(c);
+            c = deck.compraCard();
+        }  
+
+        usaCarta(c);
     }
 
     /**
@@ -61,13 +69,41 @@ public class Jogo{
      * @param carta a ser jogada
      * @return true se foi possivel jogar a carta e false se nao foi possivel
      */
-    public boolean jogaCarta(Card carta){
+    public boolean usaCarta(Card carta){
         if(ehValida(carta)){
             currentCor = carta.getCor();
             currentValor = carta.getValor();
+            jogadores.setNextPlayer(ordemNormal);
+            if(carta.getCor().equals("Multi")){
+                setCurrentCor();
+                currentValor = "N/A";
+            }
 
+            if(carta.getValor().equals("Inverte")){
+                inverteOrdem();
+            }
 
+            if(carta.getValor().equals("Pula")){
+                jogadores.setNextPlayer(ordemNormal);
+            }
 
+            if(carta.getValor().equals("+2")){
+                for(int i = 0; i < 2; i++){
+                    Card aux = deck.compraCard();
+                    jogadores.getCurrentPlayer().getHand().add(aux);
+                }
+
+                jogadores.setNextPlayer(ordemNormal);
+            }
+
+            if(carta.getValor().equals("+4")){
+                for(int i = 0; i < 4; i++){
+                    Card aux = deck.compraCard();
+                    jogadores.getCurrentPlayer().getHand().add(aux);
+                }
+
+                jogadores.setNextPlayer(ordemNormal);
+            }
             return true;
         }
 
@@ -88,5 +124,9 @@ public class Jogo{
         }
 
         return false;
+    }
+
+    public void setCurrentCor(){
+        //TODO
     }
 }
