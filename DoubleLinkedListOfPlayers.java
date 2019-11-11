@@ -132,7 +132,7 @@ public class DoubleLinkedListOfPlayers{
         }
     }
 
-    public Jogador currentPlayer(){
+    public Jogador getCurrentPlayer(){
         return current.element;
     }
 
