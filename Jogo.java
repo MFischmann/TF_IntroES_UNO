@@ -24,6 +24,11 @@ public class Jogo{
         }  
 
         usaCarta(c);
+        if(c.getCor().equals("Multi")){ //se for coringa tem que resetar p/ jogador inicial
+            inverteOrdem();
+            jogadores.setNextPlayer(ordemNormal); //volta ao jogador original
+            inverteOrdem(); //seta novamente para ordem normal
+        }
     }
 
     /**
@@ -73,7 +78,7 @@ public class Jogo{
         if(ehValida(carta)){
             currentCor = carta.getCor();
             currentValor = carta.getValor();
-            jogadores.setNextPlayer(ordemNormal);
+  
             if(carta.getCor().equals("Multi")){
                 setCurrentCor();
                 currentValor = "N/A";
@@ -86,6 +91,8 @@ public class Jogo{
             if(carta.getValor().equals("Pula")){
                 jogadores.setNextPlayer(ordemNormal);
             }
+
+            jogadores.setNextPlayer(ordemNormal); //Acoes antes desta linha precisam ocorrer antes de ir para prox jogador
 
             if(carta.getValor().equals("+2")){
                 for(int i = 0; i < 2; i++){
