@@ -3,5 +3,5 @@ public class Jogo{
     private static int IDcounter;
     private int ID;
     private DoubleLinkedListOfPlayers jogadores;
-
+    private boolean ordemNormal;
 }

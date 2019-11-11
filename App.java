@@ -24,5 +24,8 @@ public class App {
         System.out.println(d.printDeque());
 
         System.out.println(d.iterator().next());
+        for (Card card : d) {
+          System.out.println(card.getCor());  
+        }
     }
 }
