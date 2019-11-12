@@ -7,6 +7,7 @@ public class Jogo{
     private String currentCor;
     private String currentValor;
     private Card lastCard;
+    private final int initialHandSize = 7;
     public Jogo(){
         deck = new Deque();
         jogadores = new DoubleLinkedListOfPlayers();
@@ -53,7 +54,7 @@ public class Jogo{
     /**
      * Inicializa um jogo do zero
      */
-    public void iniciaJogo(){
+    public void iniciaJogo(DoubleLinkedListOfPlayers listOfPlayers){
 
         Card c = deck.compraCard(); //usa carta aleatoria para inicializar a partida
         
@@ -69,7 +70,16 @@ public class Jogo{
             inverteOrdem(); //seta novamente para ordem normal
         }
 
-        //TODO inicializa jogadores e distribuir mao inicial
+        Card compra;
+        for(int i = 0; i < listOfPlayers.size(); i++){ //percorre todos jogadores
+            for(int j = 0; j < initialHandSize; j++){ //compra cartas suficientes para compor mao inicial
+                compra = deck.compraCard(); 
+                listOfPlayers.getCurrentPlayer().getHand().add(compra);
+            }
+            listOfPlayers.setNextPlayer(ordemNormal); //pega prox jogador
+        }
+
+        listOfPlayers.setNextPlayer(ordemNormal); //volta ao jogador inicial
     }
 
     public void compraCarta(){
