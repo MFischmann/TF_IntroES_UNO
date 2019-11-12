@@ -3,9 +3,10 @@ import java.util.Scanner;
 public class App {
   
     private Scanner scan;
-
+    private Jogo uno;
     public App(){
       scan = new Scanner(System.in);
+      uno = new Jogo();
     }
     public static void main(String[] args) {
       App app = new App();
@@ -34,13 +35,33 @@ public class App {
             System.out.println("Opcao nao encontrada.");    
         }
       }
-      while(finaliza);
+      while(!finaliza);
       scan.close();
     }
     
   private void inicializaJogo(){
     //TODO
+    boolean check = false;
+    int qtdJogadores;
+    do{
+      System.out.println("Digite numero de jogadores (minimo 2 e maximo 8): ");
+      qtdJogadores = scan.nextInt();
+    }
+    while(qtdJogadores < 2 || qtdJogadores > 8);
 
+    String nomes;
+    for(int i = 1; i <= qtdJogadores; i++){ //inicializa jogadores
+      System.out.println("Digite nome do jogador "+ i+": ");
+      nomes = scan.nextLine();
+      uno.addJogador(nomes);
+      System.out.println("Jogo sera inicializado agora.");
+      uno.iniciaJogo();
+      menuJogo();
+    }
+  }
+
+  private void menuJogo(){
+    //TODO
   }
 
   private void carregaJogo(){
