@@ -118,5 +118,6 @@ public class App {
 
   private boolean salvaJogo(){
     //TODO
+    return true; //temp
   }
 }
