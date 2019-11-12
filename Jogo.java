@@ -15,20 +15,6 @@ public class Jogo{
         IDcounter++;
         currentCor = "N/A";
         currentValor = "N/A";
-
-        Card c = deck.compraCard(); //usa carta aleatoria para inicializar a partida
-        
-        while(c.getValor().equals("+4")){ //enquanto a carta do topo for +4 coringa reembaralha e compra outra carta
-            deck.add(c);
-            c = deck.compraCard();
-        }  
-
-        usaCarta(c);
-        if(c.getCor().equals("Multi")){ //se for coringa tem que resetar p/ jogador inicial
-            inverteOrdem();
-            jogadores.setNextPlayer(ordemNormal); //volta ao jogador original
-            inverteOrdem(); //seta novamente para ordem normal
-        }
     }
 
     /**
@@ -62,6 +48,28 @@ public class Jogo{
      */
     public void inverteOrdem(){
         ordemNormal = !ordemNormal;
+    }
+
+    /**
+     * Inicializa um jogo do zero
+     */
+    public void iniciaJogo(){
+
+        Card c = deck.compraCard(); //usa carta aleatoria para inicializar a partida
+        
+        while(c.getValor().equals("+4")){ //enquanto a carta do topo for +4 coringa reembaralha e compra outra carta
+            deck.add(c);
+            c = deck.compraCard();
+        }  
+
+        usaCarta(c);
+        if(c.getCor().equals("Multi")){ //se for coringa tem que resetar p/ jogador inicial
+            inverteOrdem();
+            jogadores.setNextPlayer(ordemNormal); //volta ao jogador original
+            inverteOrdem(); //seta novamente para ordem normal
+        }
+
+        //TODO inicializa jogadores e distribuir mao inicial
     }
 
     public void compraCarta(){
