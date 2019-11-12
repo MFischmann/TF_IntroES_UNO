@@ -158,7 +158,7 @@ public class Jogo{
         boolean confirm = false;
         do{
             System.out.println("Escolha (digite numero) a cor atual:\n1: Amarelo \n2: Azul \n3: Verde \n4: Vermelho");
-            novaCor = sCor.nextInt();
+            int novaCor = sCor.nextInt();
             switch(novaCor){
                 case 1:
                     currentCor = "Amerelo";
@@ -180,7 +180,7 @@ public class Jogo{
                     System.out.println("Opcao inexistente.");
             }
         }
-        while(!confirm)
+        while(!confirm);
         System.out.println("Cor escolhida: "+ currentCor);
     }
 
