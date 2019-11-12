@@ -1,31 +1,53 @@
+import java.util.Scanner;
+
 public class App {
-    public static void main(String[] args) {
-        Card c1 = new Card("1", "Verde");
-        Card c2 = new Card("3", "Azul");
-        Card c3 = new Card("Inverte", "Vermelho");
-        DoubleLinkedListOfCards deque = new DoubleLinkedListOfCards();
-        deque.add(c1);
-        deque.add(new Card("+2", "Amarelo"));
-        deque.add(c3);
-        //System.out.println(c1);
-        //System.out.println(deque.getCard(1));
-        //Card c4 = deque.remove(2);
-        //System.out.println(c4);
-        //System.out.println(c2.getCor());
-        //System.out.println(c3.getValor());
-        //System.out.println(deque.size());
+  
+    private Scanner scan;
 
-        Deque d = new Deque();
-        d.add(c1);
-        d.add(c2);
-        d.add(c3);
-        d.add(new Card("+2", "Amarelo"));
-        System.out.println(d.size());
-        System.out.println(d.printDeque());
-
-        System.out.println(d.iterator().next());
-        for (Card card : d) {
-          System.out.println(card.getCor());  
-        }
+    public App(){
+      scan = new Scanner(System.in);
     }
+    public static void main(String[] args) {
+      App app = new App();
+      app.menuInicial();
+    }
+
+    private void menuInicial(){
+      System.out.println("Bem vindo ao jogo de Uno. \nDigite a opção desejada:");
+      System.out.println("1: Inicializar novo jogo. \n2: Carregar um jogo salvo. \n 3: Finalizar programa.");
+      int opcao;
+      boolean finaliza = false;
+      do{
+        opcao = scan.nextInt();
+        switch(opcao){
+          case 1:
+            inicializaJogo();
+            break;
+          case 2:
+            carregaJogo();
+            break;
+          case 3:
+            System.out.println("Finalizando programa.");
+            finaliza = true;
+            break;
+          default:
+            System.out.println("Opcao nao encontrada.");    
+        }
+      }
+      while(finaliza);
+      scan.close();
+    }
+    
+  private void inicializaJogo(){
+    //TODO
+
+  }
+
+  private void carregaJogo(){
+    //TODO
+  }
+
+  private void salvaJogo(){
+    //TODO
+  }
 }
