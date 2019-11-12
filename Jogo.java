@@ -91,10 +91,11 @@ public class Jogo{
         jogadores.setNextPlayer(ordemNormal); //volta ao jogador inicial
     }
 
-    public void compraCarta(){
+    public Card compraCarta(){
         Jogador atual = jogadores.getCurrentPlayer();
         Card topo = deck.compraCard();
         atual.getHand().add(topo);
+        return topo;
     }
     /**
      * Tenta jogar a carta e aplica efeitos

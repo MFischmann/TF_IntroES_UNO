@@ -15,7 +15,7 @@ public class App {
 
     private void menuInicial(){
       System.out.println("Bem vindo ao jogo de Uno. \nDigite a opção desejada:");
-      System.out.println("1: Inicializar novo jogo. \n2: Carregar um jogo salvo. \n 3: Finalizar programa.");
+      System.out.println("1: Inicializar novo jogo.\n2: Carregar um jogo salvo. \n 3: Finalizar programa.");
       int opcao;
       boolean finaliza = false;
       do{
@@ -67,7 +67,7 @@ public class App {
       boolean acaocompleta = false;
       int acao;
       do{
-        System.out.println("Escolha uma opção: \n1: Jogar uma carta.\n2: Salvar Jogo.\n3: Encerrar jogo sem salvar.");
+        System.out.println("Escolha uma opção: \n1: Jogar uma carta.\n2: Comprar carta.\n3: Salvar Jogo.\n4: Encerrar jogo sem salvar.");
         acao = scan.nextInt();
         switch(acao){
           case 1:
@@ -83,14 +83,29 @@ public class App {
               //pode chamar penalidade
             }
             break;
-          case 2:
+            case 2:
+            Card compra = uno.compraCarta();
+            System.out.println("Carta comprada: "+compra);
+            if(uno.ehValida(compra)){
+              acaocompleta = uno.tentaCarta(uno.getJogadores().getCurrentPlayer().getHand().size()-1);
+              //utiliza ultima carta
+              if(acaocompleta){
+                System.out.println("Carta jogada com sucesso.");
+              }
+              else{
+                System.out.println("Carta nao valida.");
+                //pode chamar penalidade
+              }
+              break;
+            }
+          case 3:
             if(!salvaJogo()){
               System.out.println("Finalizando programa.");
               scan.close();
               System.exit(0);
             }
             break;
-          case 3:
+          case 4:
             System.out.println("Finalizando programa.");
             scan.close();
             System.exit(0);
