@@ -54,7 +54,7 @@ public class Jogo{
     /**
      * Inicializa um jogo do zero
      */
-    public void iniciaJogo(DoubleLinkedListOfPlayers listOfPlayers){
+    public void iniciaJogo(){
 
         Card c = deck.compraCard(); //usa carta aleatoria para inicializar a partida
         
@@ -71,15 +71,15 @@ public class Jogo{
         }
 
         Card compra;
-        for(int i = 0; i < listOfPlayers.size(); i++){ //percorre todos jogadores
+        for(int i = 0; i < jogadores.size(); i++){ //percorre todos jogadores
             for(int j = 0; j < initialHandSize; j++){ //compra cartas suficientes para compor mao inicial
                 compra = deck.compraCard(); 
-                listOfPlayers.getCurrentPlayer().getHand().add(compra);
+                jogadores.getCurrentPlayer().getHand().add(compra);
             }
-            listOfPlayers.setNextPlayer(ordemNormal); //pega prox jogador
+            jogadores.setNextPlayer(ordemNormal); //pega prox jogador
         }
 
-        listOfPlayers.setNextPlayer(ordemNormal); //volta ao jogador inicial
+        jogadores.setNextPlayer(ordemNormal); //volta ao jogador inicial
     }
 
     public void compraCarta(){
