@@ -143,6 +143,14 @@ public class Jogo{
 
         return false;
     }
+
+    public boolean tentaCarta(int index){
+        Card carta = getJogadores().getCurrentPlayer().getHand().getCard(index);
+        if(ehValida(carta)){
+            getJogadores().getCurrentPlayer().getHand().remove(index);
+        }
+        return usaCarta(carta);
+    }
     /**
      * 
      * @param carta carta candidata a ser jogada

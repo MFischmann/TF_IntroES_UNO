@@ -40,8 +40,6 @@ public class App {
     }
     
   private void inicializaJogo(){
-    //TODO
-    boolean check = false;
     int qtdJogadores;
     do{
       System.out.println("Digite numero de jogadores (minimo 2 e maximo 8): ");
@@ -62,13 +60,63 @@ public class App {
 
   private void menuJogo(){
     //TODO
+    while(true){ //loop principal do jogo
+      System.out.println("Turno do jogador "+uno.getJogadores().getCurrentPlayer().getNome());
+      System.out.println("Ultima carta jogada: "+uno.getLastCard());
+      printCurrentHand();
+      boolean acaocompleta = false;
+      int acao;
+      do{
+        System.out.println("Escolha uma opção: \n1: Jogar uma carta.\n2: Salvar Jogo.\n3: Encerrar jogo sem salvar.");
+        acao = scan.nextInt();
+        switch(acao){
+          case 1:
+            System.out.println("Qual carta (digite numero) deve ser jogada?");
+            printCurrentHand();
+            int index = scan.nextInt();
+            acaocompleta = uno.tentaCarta(index);
+            if(acaocompleta){
+              System.out.println("Carta jogada com sucesso.");
+            }
+            else{
+              System.out.println("Carta nao valida.");
+              //pode chamar penalidade
+            }
+            break;
+          case 2:
+            if(!salvaJogo()){
+              System.exit(0);
+            }
+            break;
+          case 3:
+            System.exit(0);
+            break;
+          default:
+            System.out.println("Acao invalida.");
+        }
+      }
+      while(!acaocompleta);
+      if(uno.verificaVitoria()){ //se alguem obtem vitoria, encerra round
+        //pode contar score aqui
+        break;
+      }
+      //pesquisar metodo para limpar console
+    }
   }
-
+  private void printCurrentHand(){
+    System.out.println("Cartas na sua mão:");
+    int contAux = 0;
+    DoubleLinkedListOfCards aux = uno.getJogadores().getCurrentPlayer().getHand();
+    for (Card card : aux) {
+      contAux++;
+      System.out.println("Carta nº"+contAux+": "+card);
+    }
+  }
   private void carregaJogo(){
     //TODO
   }
 
-  private void salvaJogo(){
+  private boolean salvaJogo(){
     //TODO
   }
 }
