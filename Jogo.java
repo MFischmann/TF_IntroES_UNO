@@ -28,6 +28,13 @@ public class Jogo{
     }
 
     /**
+     * @return the lastCard
+     */
+    public Card getLastCard() {
+        return lastCard;
+    }
+
+    /**
      * @return A ID
      */
     public int getID() {
@@ -98,7 +105,7 @@ public class Jogo{
         if(ehValida(carta)){
             currentCor = carta.getCor();
             currentValor = carta.getValor();
-  
+            lastCard = carta;
             if(carta.getCor().equals("Multi")){
                 setCurrentCor();
                 currentValor = "N/A";
@@ -182,6 +189,7 @@ public class Jogo{
         }
         while(!confirm);
         System.out.println("Cor escolhida: "+ currentCor);
+        sCor.close();
     }
 
     public void addJogador(String nome){
