@@ -199,4 +199,11 @@ public class Jogo{
     public void printScore(){
         //TODO
     }
+    /**
+     * Verifica se o jogador atual ganhou
+     * @return true se a mao do jogador estiver vazia, false se nao estiver
+     */
+    public boolean verificaVitoria(){
+        return jogadores.getCurrentPlayer().getHand().isEmpty();
+    }
 }
