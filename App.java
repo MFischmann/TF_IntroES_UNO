@@ -85,10 +85,14 @@ public class App {
             break;
           case 2:
             if(!salvaJogo()){
+              System.out.println("Finalizando programa.");
+              scan.close();
               System.exit(0);
             }
             break;
           case 3:
+            System.out.println("Finalizando programa.");
+            scan.close();
             System.exit(0);
             break;
           default:
