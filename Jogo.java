@@ -188,4 +188,15 @@ public class Jogo{
         Jogador temp = new Jogador(nome);
         jogadores.add(temp);
     }
+
+    public void penaliza(){
+        //TODO 
+    }
+
+    public void adicionaScore(){
+        //TODO
+    }
+    public void printScore(){
+        //TODO
+    }
 }
