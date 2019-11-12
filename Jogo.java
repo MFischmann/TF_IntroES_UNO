@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Jogo{
     private Deque deck;
     private static int IDcounter = 1;
@@ -152,6 +154,38 @@ public class Jogo{
     }
 
     public void setCurrentCor(){
-        //TODO
+        Scanner sCor = new Scanner(System.in);
+        boolean confirm = false;
+        do{
+            System.out.println("Escolha (digite numero) a cor atual:\n1: Amarelo \n2: Azul \n3: Verde \n4: Vermelho");
+            novaCor = sCor.nextInt();
+            switch(novaCor){
+                case 1:
+                    currentCor = "Amerelo";
+                    confirm = true;
+                    break;
+                case 2:
+                    currentCor = "Azul";
+                    confirm = true;
+                    break;
+                case 3:
+                    currentCor = "Verde";
+                    confirm = true;
+                    break;
+                case 4:
+                    currentCor = "Vermelho";
+                    confirm = true;
+                    break;
+                default:
+                    System.out.println("Opcao inexistente.");
+            }
+        }
+        while(!confirm)
+        System.out.println("Cor escolhida: "+ currentCor);
+    }
+
+    public void addJogador(String nome){
+        Jogador temp = new Jogador(nome);
+        jogadores.add(temp);
     }
 }
