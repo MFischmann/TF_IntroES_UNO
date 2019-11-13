@@ -231,7 +231,12 @@ public class Jogo{
 
         return false;
     }
-
+    /**
+     * @return the currentCor
+     */
+    public String getCurrentCor() {
+        return currentCor;
+    }
     public void setCurrentCor(){
         Scanner sCor = new Scanner(System.in);
         boolean confirm = false;

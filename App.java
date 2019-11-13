@@ -66,7 +66,13 @@ public class App {
       uno.iniciaJogo();
       menuJogo();
   }
-
+  private void printLastCard(){
+    Card last = uno.getLastCard();
+    System.out.println("Ultima carta jogada: "+last);
+    if(last.getCor().equals("Multi")){
+      System.out.println("Cor escolhida: "+uno.getCurrentCor());
+    }
+  }
   private void menuJogo(){
     boolean podePular;
     while(true){ //loop principal do jogo
@@ -74,7 +80,7 @@ public class App {
       podePular = false;
       int acao;
       System.out.println("Turno do jogador "+uno.getJogadores().getCurrentPlayer().getNome());
-      System.out.println("Ultima carta jogada: "+uno.getLastCard());
+      printLastCard();
       printCurrentHand();
       do{
         System.out.println("Escolha uma opcao: \n1: Jogar uma carta.\n2: Comprar carta. \n3: Pular turno. \n4: Mostrar ultima carta jogada.\n5: Salvar Jogo.\n6: Encerrar jogo sem salvar.");
@@ -127,7 +133,7 @@ public class App {
               }
               break;
             case 4:
-              System.out.println("Ultima carta jogada: "+uno.getLastCard());
+              printLastCard();
               break;
             case 5:
               if(!salvaJogo()){
