@@ -14,7 +14,7 @@ public class App {
 
     }
     private void menuInicial(){
-      System.out.println("Bem vindo ao jogo de Uno. \nDigite a opção desejada:");
+      System.out.println("Bem vindo ao jogo de Uno. \nDigite a opcao desejada:");
       System.out.println("1: Inicializar novo jogo.\n2: Carregar um jogo salvo. \n 3: Finalizar programa.");
       int opcao;
       boolean finaliza = false;
@@ -68,7 +68,7 @@ public class App {
       boolean acaocompleta = false;
       int acao;
       do{
-        System.out.println("Escolha uma opção: \n1: Jogar uma carta.\n2: Comprar carta.\n3: Salvar Jogo.\n4: Encerrar jogo sem salvar.");
+        System.out.println("Escolha uma opcao: \n1: Jogar uma carta.\n2: Comprar carta.\n3: Salvar Jogo.\n4: Encerrar jogo sem salvar.");
         acao = scan.nextInt();
         switch(acao){
           case 1:
@@ -129,7 +129,7 @@ public class App {
     DoubleLinkedListOfCards aux = uno.getJogadores().getCurrentPlayer().getHand();
     for (Card card : aux) {
       contAux++;
-      System.out.println("Carta nº"+contAux+": "+card);
+      System.out.println("Carta N"+contAux+": "+card);
     }
   }
   private void carregaJogo(){
