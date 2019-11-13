@@ -69,7 +69,6 @@ public class Jogo{
      * Inicializa um jogo do zero
      */
     public void iniciaJogo(){
-
         carrega("DequeDefault");
         Card c = deck.compraCard(); //usa carta aleatoria para inicializar a partida
         
@@ -239,9 +238,10 @@ public class Jogo{
         do{
             System.out.println("Escolha (digite numero) a cor atual:\n1: Amarelo \n2: Azul \n3: Verde \n4: Vermelho");
             int novaCor = sCor.nextInt();
+            sCor.nextLine();
             switch(novaCor){
                 case 1:
-                    currentCor = "Amerelo";
+                    currentCor = "Amarelo";
                     confirm = true;
                     break;
                 case 2:
@@ -262,7 +262,7 @@ public class Jogo{
         }
         while(!confirm);
         System.out.println("Cor escolhida: "+ currentCor);
-        sCor.close();
+        //sCor.close();
     }
 
     public void addJogador(String nome){
