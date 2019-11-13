@@ -13,11 +13,6 @@ public class App {
       app.menuInicial();
 
     }
-      private Jogo getJogo() {
-
-        return uno;
-
-      }
     private void menuInicial(){
       System.out.println("Bem vindo ao jogo de Uno. \nDigite a opção desejada:");
       System.out.println("1: Inicializar novo jogo.\n2: Carregar um jogo salvo. \n 3: Finalizar programa.");

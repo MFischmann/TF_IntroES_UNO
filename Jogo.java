@@ -168,7 +168,7 @@ public class Jogo{
     }
 
     public boolean tentaCarta(int index){
-        Card carta = getJogadores().getCurrentPlayer().getHand().getCard(index);
+        Card carta = getJogadores().getCurrentPlayer().getHand().getCard(index-1);
         if(ehValida(carta)){
             getJogadores().getCurrentPlayer().getHand().remove(index);
         }
