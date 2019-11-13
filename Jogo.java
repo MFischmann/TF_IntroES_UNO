@@ -69,6 +69,7 @@ public class Jogo{
      * Inicializa um jogo do zero
      */
     public void iniciaJogo(){
+
         carrega("DequeDefault");
         Card c = deck.compraCard(); //usa carta aleatoria para inicializar a partida
         
