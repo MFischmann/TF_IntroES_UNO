@@ -68,7 +68,7 @@ public class App {
       System.out.println("Ultima carta jogada: "+uno.getLastCard());
       printCurrentHand();
       do{
-        System.out.println("Escolha uma opcao: \n1: Jogar uma carta.\n2: Comprar carta. \n3: Pular turno. \n4: Salvar Jogo.\n5: Encerrar jogo sem salvar.");
+        System.out.println("Escolha uma opcao: \n1: Jogar uma carta.\n2: Comprar carta. \n3: Pular turno. \n4: Mostrar ultima carta jogada.\n5: Salvar Jogo.\n6: Encerrar jogo sem salvar.");
         acao = scan.nextInt();
         switch(acao){
             case 1:
@@ -117,13 +117,16 @@ public class App {
               }
               break;
             case 4:
+              System.out.println("Ultima carta jogada: "+uno.getLastCard());
+              break;
+            case 5:
               if(!salvaJogo()){
                 System.out.println("Finalizando programa.");
                 scan.close();
                 System.exit(0);
               }
               break;
-            case 5:
+            case 6:
               System.out.println("Finalizando programa.");
               scan.close();
               System.exit(0);
