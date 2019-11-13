@@ -64,29 +64,29 @@ public class Jogo{
      * Inicializa um jogo do zero
      */
     public void iniciaJogo(){
-              Card c1 = new Card("1", "Azul");
-      deck.add(c1);
-      deck.add(new Card("2","Azul"));
-      deck.add(new Card("3","Azul"));
-      deck.add(new Card("4","Azul"));
-      deck.add(new Card("1","Amarelo"));
-      deck.add(new Card("2","Amarelo"));
-      deck.add(new Card("3","Amarelo"));
-      deck.add(new Card("4","Amarelo"));
-      deck.add(new Card("2","Verde"));
-      deck.add(new Card("3","Verde"));
-      deck.add(new Card("4","Verde"));
-      deck.add(new Card("1","Verde"));
-      deck.add(new Card("1","Vermelho"));
-      deck.add(new Card("2","Vermelho"));
-      deck.add(new Card("3","Vermelho"));
-      deck.add(new Card("4","Vermelho"));
-      deck.add(new Card("5","Vermelho"));
-      deck.add(new Card("6","Vermelho"));
-      deck.add(new Card("7","Vermelho"));
-      deck.add(new Card("8","Vermelho"));
-      deck.add(new Card("9","Vermelho"));
-      deck.add(new Card("0","Vermelho"));
+        Card c1 = new Card("1", "Azul");
+        deck.add(c1);
+        deck.add(new Card("2","Azul"));
+        deck.add(new Card("3","Azul"));
+        deck.add(new Card("4","Azul"));
+        deck.add(new Card("1","Amarelo"));
+        deck.add(new Card("2","Amarelo"));
+        deck.add(new Card("3","Amarelo"));
+        deck.add(new Card("4","Amarelo"));
+        deck.add(new Card("2","Verde"));
+        deck.add(new Card("3","Verde"));
+        deck.add(new Card("4","Verde"));
+        deck.add(new Card("1","Verde"));
+        deck.add(new Card("1","Vermelho"));
+        deck.add(new Card("2","Vermelho"));
+        deck.add(new Card("3","Vermelho"));
+        deck.add(new Card("4","Vermelho"));
+        deck.add(new Card("5","Vermelho"));
+        deck.add(new Card("6","Vermelho"));
+        deck.add(new Card("7","Vermelho"));
+        deck.add(new Card("8","Vermelho"));
+        deck.add(new Card("9","Vermelho"));
+        deck.add(new Card("0","Vermelho"));
         Card c = deck.compraCard(); //usa carta aleatoria para inicializar a partida
         
         while(c.getValor().equals("+4")){ //enquanto a carta do topo for +4 coringa reembaralha e compra outra carta
@@ -109,8 +109,6 @@ public class Jogo{
             }
             jogadores.setNextPlayer(ordemNormal); //pega prox jogador
         }
-
-        jogadores.setNextPlayer(ordemNormal); //volta ao jogador inicial
     }
 
     public Card compraCarta(){
