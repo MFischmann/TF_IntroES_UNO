@@ -170,7 +170,12 @@ public class Jogo{
             }
 
             if(carta.getValor().equals("Inverte")){
-                inverteOrdem();
+                if(jogadores.size()==2){
+                    pulaTurno();
+                }
+                else{
+                    inverteOrdem();
+                }
             }
 
             if(carta.getValor().equals("Pula")){
