@@ -69,7 +69,7 @@ public class Jogo{
      * Inicializa um jogo do zero
      */
     public void iniciaJogo(){
-        carrega("DequegitDefault");
+        carrega("DequeDefault");
         Card c = deck.compraCard(); //usa carta aleatoria para inicializar a partida
         
         while(c.getValor().equals("+4")){ //enquanto a carta do topo for +4 coringa reembaralha e compra outra carta

@@ -79,6 +79,7 @@ public class App {
       do{
         System.out.println("Escolha uma opcao: \n1: Jogar uma carta.\n2: Comprar carta. \n3: Pular turno. \n4: Mostrar ultima carta jogada.\n5: Salvar Jogo.\n6: Encerrar jogo sem salvar.");
         acao = scan.nextInt();
+        scan.nextLine();
         switch(acao){
             case 1:
               System.out.println("Qual carta (digite numero) deve ser jogada?");
