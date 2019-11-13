@@ -69,7 +69,7 @@ public class Jogo{
      * Inicializa um jogo do zero
      */
     public void iniciaJogo(){
-        carrega("DequeDefault");
+        carrega("DequegitDefault");
         Card c = deck.compraCard(); //usa carta aleatoria para inicializar a partida
         
         while(c.getValor().equals("+4")){ //enquanto a carta do topo for +4 coringa reembaralha e compra outra carta
@@ -118,7 +118,7 @@ public class Jogo{
             sc.useDelimiter("[\n]"); // separador:
             while (sc.hasNext()) {
                 line = sc.next().trim();
-                if(line.equals("Deque")){
+                if(line.equals("Deque")){//adiciona ao deque
                     System.out.println("A");
                     line = sc.next().trim();
                     while(sc.hasNext()&&!line.equals(";")){
@@ -127,7 +127,8 @@ public class Jogo{
                         line = sc.next().trim();
                     }
                 }
-                else{
+                else{//Adiciona jogador e mao
+                    //TODO
 
                 }
             }

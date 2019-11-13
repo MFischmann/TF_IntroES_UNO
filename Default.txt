@@ -1,5 +1,0 @@
-Deque
-0,Vermelho
-0,Azul
-0,Amerelo
-;
