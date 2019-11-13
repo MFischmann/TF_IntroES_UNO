@@ -44,6 +44,7 @@ public class App {
     do{
       System.out.println("Digite numero de jogadores (minimo 2 e maximo 8): ");
       qtdJogadores = scan.nextInt();
+      scan.nextLine();
     }
     while(qtdJogadores < 2 || qtdJogadores > 8);
 

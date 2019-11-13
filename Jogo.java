@@ -170,7 +170,7 @@ public class Jogo{
     public boolean tentaCarta(int index){
         Card carta = getJogadores().getCurrentPlayer().getHand().getCard(index-1);
         if(ehValida(carta)){
-            getJogadores().getCurrentPlayer().getHand().remove(index);
+            getJogadores().getCurrentPlayer().getHand().remove(index-1);
         }
         return usaCarta(carta);
     }
