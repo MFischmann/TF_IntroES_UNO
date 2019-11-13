@@ -11,8 +11,13 @@ public class App {
     public static void main(String[] args) {
       App app = new App();
       app.menuInicial();
-    }
 
+    }
+      private Jogo getJogo() {
+
+        return uno;
+
+      }
     private void menuInicial(){
       System.out.println("Bem vindo ao jogo de Uno. \nDigite a opção desejada:");
       System.out.println("1: Inicializar novo jogo.\n2: Carregar um jogo salvo. \n 3: Finalizar programa.");
@@ -52,10 +57,10 @@ public class App {
       System.out.println("Digite nome do jogador "+ i+": ");
       nomes = scan.nextLine();
       uno.addJogador(nomes);
+    }
       System.out.println("Jogo sera inicializado agora.");
       uno.iniciaJogo();
       menuJogo();
-    }
   }
 
   private void menuJogo(){

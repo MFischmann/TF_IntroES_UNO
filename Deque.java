@@ -1,8 +1,6 @@
 import java.util.Random;
 
 public class Deque extends DoubleLinkedListOfCards{
-    private DoubleLinkedListOfCards deck;
-
     public Deque(){
         super();
     }
@@ -12,7 +10,7 @@ public class Deque extends DoubleLinkedListOfCards{
      */
     public Card compraCard(){
         Random r = new Random();
-        int randomIndex = r.nextInt(deck.size());
+        int randomIndex = r.nextInt(super.size());
         return super.remove(randomIndex);
     }
     /**
