@@ -11,7 +11,6 @@ public class App {
     public static void main(String[] args) {
       App app = new App();
       app.menuInicial();
-
     }
     private void menuInicial(){
       System.out.println("Bem vindo ao jogo de Uno. \nDigite a opcao desejada:");
@@ -60,67 +59,79 @@ public class App {
   }
 
   private void menuJogo(){
-    //TODO
+    boolean podePular;
     while(true){ //loop principal do jogo
+      boolean acaocompleta = false;
+      podePular = false;
+      int acao;
       System.out.println("Turno do jogador "+uno.getJogadores().getCurrentPlayer().getNome());
       System.out.println("Ultima carta jogada: "+uno.getLastCard());
       printCurrentHand();
-      boolean acaocompleta = false;
-      int acao;
       do{
-        System.out.println("Escolha uma opcao: \n1: Jogar uma carta.\n2: Comprar carta. \n3: Salvar Jogo.\n4: Encerrar jogo sem salvar.");
+        System.out.println("Escolha uma opcao: \n1: Jogar uma carta.\n2: Comprar carta. \n3: Pular turno. \n4: Salvar Jogo.\n5: Encerrar jogo sem salvar.");
         acao = scan.nextInt();
         switch(acao){
-          case 1:
-            System.out.println("Qual carta (digite numero) deve ser jogada?");
-            printCurrentHand();
-            int index = scan.nextInt();
-            acaocompleta = uno.tentaCarta(index);
-            if(acaocompleta){
-              System.out.println("Carta jogada com sucesso.");
-            }
-            else{
-              System.out.println("Carta nao valida.");
-              //pode chamar penalidade
-            }
-            break;
-            case 2:
-              if(uno.compraCarta()){
-                int lastIndex = uno.getJogadores().getCurrentPlayer().getHand().size()-1;
-                Card compra = uno.getJogadores().getCurrentPlayer().getHand().getCard(lastIndex);
-                System.out.println("Carta comprada: "+compra);
-                /*
-                if(uno.ehValida(compra)){
-                  acaocompleta = uno.tentaCarta(uno.getJogadores().getCurrentPlayer().getHand().size()-1);
-                  //utiliza ultima carta
-                  if(acaocompleta){
-                    System.out.println("Carta jogada com sucesso.");
-                  }
-                  else{
-                    System.out.println("Carta nao valida.");
-                    //pode chamar penalidade
-                  }
+            case 1:
+              System.out.println("Qual carta (digite numero) deve ser jogada?");
+              printCurrentHand();
+              int index = scan.nextInt();
+              acaocompleta = uno.tentaCarta(index);
+              if(acaocompleta){
+                System.out.println("Carta jogada com sucesso.");
               }
-              */
-            }
+              else{
+                System.out.println("Carta nao valida.");
+                //pode chamar penalidade
+              }
             break;
-
-          case 3:
-            if(!salvaJogo()){
+              case 2:
+                if(uno.compraCarta()){
+                  int lastIndex = uno.getJogadores().getCurrentPlayer().getHand().size()-1;
+                  Card compra = uno.getJogadores().getCurrentPlayer().getHand().getCard(lastIndex);
+                  System.out.println("Carta comprada: "+compra);
+                  /*
+                  if(uno.ehValida(compra)){
+                    acaocompleta = uno.tentaCarta(uno.getJogadores().getCurrentPlayer().getHand().size()-1);
+                    //utiliza ultima carta
+                    if(acaocompleta){
+                      System.out.println("Carta jogada com sucesso.");
+                    }
+                    else{
+                      System.out.println("Carta nao valida.");
+                      //pode chamar penalidade
+                    }
+                }
+                */
+              }
+              podePular = true;
+              break;
+          
+            case 3:
+              if(podePular){
+                uno.pulaTurno();
+                acaocompleta = true;
+                System.out.println("Pulando turno.");
+              }
+              else{
+                System.out.println("Precisa comprar uma carta antes de pular turno.");
+              }
+              break;
+            case 4:
+              if(!salvaJogo()){
+                System.out.println("Finalizando programa.");
+                scan.close();
+                System.exit(0);
+              }
+              break;
+            case 5:
               System.out.println("Finalizando programa.");
               scan.close();
               System.exit(0);
-            }
-            break;
-          case 4:
-            System.out.println("Finalizando programa.");
-            scan.close();
-            System.exit(0);
-            break;
-          default:
-            System.out.println("Acao invalida.");
+              break;
+            default:
+              System.out.println("Acao invalida.");
+          }
         }
-      }
       while(!acaocompleta);
       if(uno.verificaVitoria()){ //se alguem obtem vitoria, encerra round
         //pode contar score aqui

@@ -144,7 +144,7 @@ public class Jogo{
             }
 
             if(carta.getValor().equals("Pula")){
-                jogadores.setNextPlayer(ordemNormal);
+                pulaTurno();
             }
 
             jogadores.setNextPlayer(ordemNormal); //Acoes antes desta linha precisam ocorrer antes de ir para prox jogador
@@ -169,7 +169,10 @@ public class Jogo{
 
         return false;
     }
-
+    public void pulaTurno(){
+        jogadores.setNextPlayer(ordemNormal);
+    }
+    
     public boolean tentaCarta(int index){
         Card carta = getJogadores().getCurrentPlayer().getHand().getCard(index-1);
         if(ehValida(carta)){
