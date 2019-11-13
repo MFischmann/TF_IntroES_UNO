@@ -87,6 +87,7 @@ public class Jogo{
         deck.add(new Card("8","Vermelho"));
         deck.add(new Card("9","Vermelho"));
         deck.add(new Card("0","Vermelho"));
+
         Card c = deck.compraCard(); //usa carta aleatoria para inicializar a partida
         
         while(c.getValor().equals("+4")){ //enquanto a carta do topo for +4 coringa reembaralha e compra outra carta
@@ -104,18 +105,24 @@ public class Jogo{
         Card compra;
         for(int i = 0; i < jogadores.size(); i++){ //percorre todos jogadores
             for(int j = 0; j < initialHandSize; j++){ //compra cartas suficientes para compor mao inicial
-                compra = deck.compraCard(); 
-                jogadores.getCurrentPlayer().getHand().add(compra);
+                    compraCarta();
             }
             jogadores.setNextPlayer(ordemNormal); //pega prox jogador
         }
     }
-
-    public Card compraCarta(){
+    /**
+     * Tenta comprar carta para jogador atual
+     * @return true se pode comprar, false se deck vazio
+     */
+    public boolean compraCarta(){
+        if(deck.isEmpty()){
+            System.out.println("Deck vazio.");
+            return false;
+        }
         Jogador atual = jogadores.getCurrentPlayer();
         Card topo = deck.compraCard();
         atual.getHand().add(topo);
-        return topo;
+        return true;
     }
     /**
      * Tenta jogar a carta e aplica efeitos
@@ -144,8 +151,7 @@ public class Jogo{
 
             if(carta.getValor().equals("+2")){
                 for(int i = 0; i < 2; i++){
-                    Card aux = deck.compraCard();
-                    jogadores.getCurrentPlayer().getHand().add(aux);
+                    compraCarta();
                 }
 
                 jogadores.setNextPlayer(ordemNormal);
@@ -153,8 +159,7 @@ public class Jogo{
 
             if(carta.getValor().equals("+4")){
                 for(int i = 0; i < 4; i++){
-                    Card aux = deck.compraCard();
-                    jogadores.getCurrentPlayer().getHand().add(aux);
+                    compraCarta();
                 }
 
                 jogadores.setNextPlayer(ordemNormal);

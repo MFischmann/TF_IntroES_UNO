@@ -9,9 +9,12 @@ public class Deque extends DoubleLinkedListOfCards{
      * @return A carta aleatoria
      */
     public Card compraCard(){
+        if(!super.isEmpty()){
         Random r = new Random();
         int randomIndex = r.nextInt(super.size());
         return super.remove(randomIndex);
+        }
+        return null;
     }
     /**
      * Retorna uma string contendo a informacao de todas as cartas contidas em deck

@@ -85,20 +85,26 @@ public class App {
             }
             break;
             case 2:
-            Card compra = uno.compraCarta();
-            System.out.println("Carta comprada: "+compra);
-            if(uno.ehValida(compra)){
-              acaocompleta = uno.tentaCarta(uno.getJogadores().getCurrentPlayer().getHand().size()-1);
-              //utiliza ultima carta
-              if(acaocompleta){
-                System.out.println("Carta jogada com sucesso.");
+              if(uno.compraCarta()){
+                int lastIndex = uno.getJogadores().getCurrentPlayer().getHand().size()-1;
+                Card compra = uno.getJogadores().getCurrentPlayer().getHand().getCard(lastIndex);
+                System.out.println("Carta comprada: "+compra);
+                /*
+                if(uno.ehValida(compra)){
+                  acaocompleta = uno.tentaCarta(uno.getJogadores().getCurrentPlayer().getHand().size()-1);
+                  //utiliza ultima carta
+                  if(acaocompleta){
+                    System.out.println("Carta jogada com sucesso.");
+                  }
+                  else{
+                    System.out.println("Carta nao valida.");
+                    //pode chamar penalidade
+                  }
               }
-              else{
-                System.out.println("Carta nao valida.");
-                //pode chamar penalidade
-              }
-              break;
+              */
             }
+            break;
+
           case 3:
             if(!salvaJogo()){
               System.out.println("Finalizando programa.");
