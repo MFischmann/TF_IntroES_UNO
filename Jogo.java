@@ -1,4 +1,9 @@
 import java.util.Scanner;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Jogo{
     private Deque deck;
@@ -64,30 +69,7 @@ public class Jogo{
      * Inicializa um jogo do zero
      */
     public void iniciaJogo(){
-        Card c1 = new Card("1", "Azul");
-        deck.add(c1);
-        deck.add(new Card("2","Azul"));
-        deck.add(new Card("3","Azul"));
-        deck.add(new Card("4","Azul"));
-        deck.add(new Card("1","Amarelo"));
-        deck.add(new Card("2","Amarelo"));
-        deck.add(new Card("3","Amarelo"));
-        deck.add(new Card("4","Amarelo"));
-        deck.add(new Card("2","Verde"));
-        deck.add(new Card("3","Verde"));
-        deck.add(new Card("4","Verde"));
-        deck.add(new Card("1","Verde"));
-        deck.add(new Card("1","Vermelho"));
-        deck.add(new Card("2","Vermelho"));
-        deck.add(new Card("3","Vermelho"));
-        deck.add(new Card("4","Vermelho"));
-        deck.add(new Card("5","Vermelho"));
-        deck.add(new Card("6","Vermelho"));
-        deck.add(new Card("7","Vermelho"));
-        deck.add(new Card("8","Vermelho"));
-        deck.add(new Card("9","Vermelho"));
-        deck.add(new Card("0","Vermelho"));
-
+        carrega("DequeDefault");
         Card c = deck.compraCard(); //usa carta aleatoria para inicializar a partida
         
         while(c.getValor().equals("+4")){ //enquanto a carta do topo for +4 coringa reembaralha e compra outra carta
@@ -102,7 +84,6 @@ public class Jogo{
             inverteOrdem(); //seta novamente para ordem normal
         }
 
-        Card compra;
         for(int i = 0; i < jogadores.size(); i++){ //percorre todos jogadores
             for(int j = 0; j < initialHandSize; j++){ //compra cartas suficientes para compor mao inicial
                     compraCarta();
@@ -110,8 +91,56 @@ public class Jogo{
             jogadores.setNextPlayer(ordemNormal); //pega prox jogador
         }
     }
+    
+    /**
+     * Realiza leitura de arquivo para carregar deque, jogadores e mao dos jogadores.
+     * @param string nome do arquivo a ser lido
+     */
+    public void carrega(String fileName) {
+        System.out.println("Inicializando leitura do arquivo "+fileName);
+        String line;
+        String currDir = Paths.get("").toAbsolutePath().toString();
+        // Monta o nome do arquivo
+        String nameComplete = currDir+"\\"+fileName+".txt";
+        // Cria acesso ao "diretorio" da mídia (disco)
+        Path path = Paths.get(nameComplete);
+        // Usa a classe scanner para fazer a leitura do arquivo
+        /*
+        try (Scanner sc = new Scanner(Files.newBufferedReader(path, StandardCharsets.UTF_8))){
+            sc.useDelimiter("[;\n]"); // separadores: ; e nova linha
+            while (sc.hasNext()) {
+
+            }
+
+        }
+        */
+        try (Scanner sc = new Scanner(Files.newBufferedReader(path, StandardCharsets.UTF_8))){
+            sc.useDelimiter("[\n]"); // separador:
+            while (sc.hasNext()) {
+                line = sc.next().trim();
+                if(line.equals("Deque")){
+                    System.out.println("A");
+                    line = sc.next().trim();
+                    while(sc.hasNext()&&!line.equals(";")){
+                        String[] componente = line.split(",");
+                        deck.add(new Card(componente[0], componente[1]));
+                        line = sc.next().trim();
+                    }
+                }
+                else{
+
+                }
+            }
+
+        }
+        catch (IOException x){
+            System.err.format("Erro de E/S: %s%n", x);
+        }
+    }
+
     /**
      * Tenta comprar carta para jogador atual
+     * 
      * @return true se pode comprar, false se deck vazio
      */
     public boolean compraCarta(){
@@ -172,7 +201,7 @@ public class Jogo{
     public void pulaTurno(){
         jogadores.setNextPlayer(ordemNormal);
     }
-    
+
     public boolean tentaCarta(int index){
         Card carta = getJogadores().getCurrentPlayer().getHand().getCard(index-1);
         if(ehValida(carta)){

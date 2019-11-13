@@ -11,6 +11,15 @@ public class App {
     public static void main(String[] args) {
       App app = new App();
       app.menuInicial();
+      /*
+      Jogo teste = new Jogo();
+      teste.carrega("Default");
+      System.out.println(teste.getDeck().size());
+      System.out.println(teste.getDeck().getCard(1));
+      System.out.println(teste.getDeck().getCard(1).getCor().equals("Azul"));
+      System.out.println(teste.getDeck().getCard(1).getCor().length());
+      System.out.println(teste.getDeck().getCard(1).getValor().equals("0"));
+      */
     }
     private void menuInicial(){
       System.out.println("Bem vindo ao jogo de Uno. \nDigite a opcao desejada:");
