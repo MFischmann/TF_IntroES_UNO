@@ -178,8 +178,16 @@ public class App {
   }
   private void carregaJogo(){
     //TODO
-    uno.carrega("JogoUno1");
-    menuJogo();
+    System.out.println("Digite o ID do jogo a ser carregado.");
+    int inID = scan.nextInt();
+    scan.nextLine();
+    if(uno.carrega("JogoUno"+inID)){
+      menuJogo();
+    }
+    else{
+      System.out.println("Jogo nao pode ser carregado.");
+    }
+    
   }
 
   private boolean salvaJogo(){

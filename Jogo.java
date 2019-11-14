@@ -135,7 +135,7 @@ public class Jogo{
      * Realiza leitura de arquivo para carregar deque, jogadores e mao dos jogadores.
      * @param string nome do arquivo a ser lido
      */
-    public void carrega(String fileName) {
+    public boolean carrega(String fileName) {
         System.out.println("Inicializando leitura do arquivo "+fileName);
         String line;
         String currDir = Paths.get("").toAbsolutePath().toString();
@@ -190,9 +190,11 @@ public class Jogo{
                 }
             }
             jogadores.setCurrentInicial();
+            return true;
         }
         catch (IOException x){
             System.err.format("Erro de E/S: %s%n", x);
+            return false;
         }
     }
 
