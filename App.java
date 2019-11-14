@@ -6,7 +6,6 @@ public class App {
     private Jogo uno;
     public App(){
       scan = new Scanner(System.in);
-      uno = new Jogo();
     }
     public static void main(String[] args) {
       App app = new App();
@@ -22,12 +21,13 @@ public class App {
       */
     }
     private void menuInicial(){
-      System.out.println("Bem vindo ao jogo de Uno. \nDigite a opcao desejada:");
-      System.out.println("1: Inicializar novo jogo.\n2: Carregar um jogo salvo.\n3: Finalizar programa.");
       int opcao;
       boolean finaliza = false;
       do{
+        System.out.println("Bem vindo ao jogo de Uno. \nDigite a opcao desejada:");
+        System.out.println("1: Inicializar novo jogo.\n2: Carregar um jogo salvo.\n3: Finalizar programa.");
         opcao = scan.nextInt();
+        scan.nextLine();
         switch(opcao){
           case 1:
             inicializaJogo();
@@ -48,6 +48,7 @@ public class App {
     }
     
   private void inicializaJogo(){
+    uno = new Jogo();
     int qtdJogadores;
     do{
       System.out.println("Digite numero de jogadores (minimo 2 e maximo 8): ");
@@ -66,15 +67,22 @@ public class App {
       uno.iniciaJogo();
       menuJogo();
   }
-
+  private void printLastCard(){
+    Card last = uno.getLastCard();
+    System.out.println("Ultima carta jogada: "+last);
+    if(last.getCor().equals("Multi")){
+      System.out.println("Cor escolhida: "+uno.getCurrentCor());
+    } 
+  }
   private void menuJogo(){
     boolean podePular;
+    boolean saiJogo = false;
     while(true){ //loop principal do jogo
       boolean acaocompleta = false;
       podePular = false;
       int acao;
       System.out.println("Turno do jogador "+uno.getJogadores().getCurrentPlayer().getNome());
-      System.out.println("Ultima carta jogada: "+uno.getLastCard());
+      printLastCard();
       printCurrentHand();
       do{
         System.out.println("Escolha uma opcao: \n1: Jogar uma carta.\n2: Comprar carta. \n3: Pular turno. \n4: Mostrar ultima carta jogada.\n5: Salvar Jogo.\n6: Encerrar jogo sem salvar.");
@@ -127,27 +135,44 @@ public class App {
               }
               break;
             case 4:
-              System.out.println("Ultima carta jogada: "+uno.getLastCard());
+              printLastCard();
               break;
             case 5:
               if(!salvaJogo()){
-                System.out.println("Finalizando programa.");
-                scan.close();
-                System.exit(0);
+                System.out.println("Saindo do jogo.");
+                saiJogo = true;
+                //scan.close();
+                //System.exit(0);
               }
+              acaocompleta = true;
               break;
             case 6:
-              System.out.println("Finalizando programa.");
-              scan.close();
-              System.exit(0);
+              System.out.println("Saindo do jogo.");
+              saiJogo = true;
+              //scan.close();
+              //System.exit(0);
+              acaocompleta = true;
               break;
             default:
               System.out.println("Acao invalida.");
           }
         }
       while(!acaocompleta);
-      if(uno.verificaVitoria()){ //se alguem obtem vitoria, encerra round
+      if(uno.verificaVitoria()){ //se alguem obteve vitoria, encerra round
         //pode contar score aqui
+        Jogador w = uno.getWinner();
+        System.out.println("Vitoria do jogador "+w.getNome());
+        System.out.println("Score atual do jogador: "+w.getScore());
+        System.out.println("Jogar novamente? (S/N)");
+        if(simNao()){
+          uno.reinicia();
+        }
+        else{
+          break;
+        }
+        
+      }
+      if(saiJogo){
         break;
       }
       //pesquisar metodo para limpar console
@@ -163,11 +188,37 @@ public class App {
     }
   }
   private void carregaJogo(){
-    //TODO
+    uno = new Jogo();
+    System.out.println("Digite o nome do jogo a ser carregado.");
+    String loadName = scan.nextLine().trim();
+    boolean loaded = uno.carrega(loadName);
+    if(loaded){
+      menuJogo();
+    }
+    else{
+      System.out.println("Jogo nao pode ser carregado.");
+    }
+    
+  }
+  private boolean simNao(){
+    while(true){
+      String ans = scan.nextLine().trim();
+        if(ans.equals("S")){
+          return true;
+        }
+        else if(ans.equals("N")){
+          return false;
+        }
+      }
   }
 
   private boolean salvaJogo(){
-    //TODO
-    return true; //temp
+    System.out.println("Salvando jogo. Digite nome do arquivo.");
+    String fileName = scan.nextLine().trim();
+    fileName = uno.salva(fileName);
+    System.out.println("Jogo salvo no arquivo "+fileName);
+      System.out.println("Deseja continuar jogando? (S/N)");
+      return simNao();
+    
   }
 }
