@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 
 public class Jogo{
     private Deque deck;
-    //private static int IDcounter = 1;
+    //private static int IDcounter = 7;
     //private int ID;
     private DoubleLinkedListOfPlayers jogadores;
     private Jogador winner;
@@ -16,7 +16,7 @@ public class Jogo{
     private String currentCor;
     private String currentValor;
     private Card lastCard;
-    private final int initialHandSize = 1;
+    private final int initialHandSize = 7;
     public Jogo(){
         deck = new Deque();
         jogadores = new DoubleLinkedListOfPlayers();

@@ -82,10 +82,11 @@ public class App {
       podePular = false;
       int acao;
       System.out.println("Turno do jogador "+uno.getJogadores().getCurrentPlayer().getNome());
-      printLastCard();
+     
       printCurrentHand();
       do{
-        System.out.println("Escolha uma opcao: \n1: Jogar uma carta.\n2: Comprar carta. \n3: Pular turno. \n4: Mostrar ultima carta jogada.\n5: Salvar Jogo.\n6: Encerrar jogo sem salvar.");
+        System.out.println("Escolha uma opcao: \n1: Jogar uma carta.\n2: Comprar carta. \n3: Pular turno. \n4: Salvar Jogo.\n5: Encerrar jogo sem salvar.");
+        printLastCard();
         acao = scan.nextInt();
         scan.nextLine();
         switch(acao){
@@ -134,10 +135,8 @@ public class App {
                 System.out.println("Precisa comprar uma carta antes de pular turno.");
               }
               break;
+            
             case 4:
-              printLastCard();
-              break;
-            case 5:
               if(!salvaJogo()){
                 System.out.println("Saindo do jogo.");
                 saiJogo = true;
@@ -146,7 +145,7 @@ public class App {
               }
               acaocompleta = true;
               break;
-            case 6:
+            case 5:
               System.out.println("Saindo do jogo.");
               saiJogo = true;
               //scan.close();
