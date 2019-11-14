@@ -22,11 +22,11 @@ public class App {
       */
     }
     private void menuInicial(){
-      System.out.println("Bem vindo ao jogo de Uno. \nDigite a opcao desejada:");
-      System.out.println("1: Inicializar novo jogo.\n2: Carregar um jogo salvo.\n3: Finalizar programa.");
       int opcao;
       boolean finaliza = false;
       do{
+        System.out.println("Bem vindo ao jogo de Uno. \nDigite a opcao desejada:");
+        System.out.println("1: Inicializar novo jogo.\n2: Carregar um jogo salvo.\n3: Finalizar programa.");
         opcao = scan.nextInt();
         switch(opcao){
           case 1:
@@ -75,6 +75,7 @@ public class App {
   }
   private void menuJogo(){
     boolean podePular;
+    boolean saiJogo = false;
     while(true){ //loop principal do jogo
       boolean acaocompleta = false;
       podePular = false;
@@ -137,15 +138,19 @@ public class App {
               break;
             case 5:
               if(!salvaJogo()){
-                System.out.println("Finalizando programa.");
-                scan.close();
-                System.exit(0);
+                System.out.println("Saindo do jogo.");
+                saiJogo = true;
+                //scan.close();
+                //System.exit(0);
               }
+              acaocompleta = true;
               break;
             case 6:
-              System.out.println("Finalizando programa.");
-              scan.close();
-              System.exit(0);
+              System.out.println("Saindo do jogo.");
+              saiJogo = true;
+              //scan.close();
+              //System.exit(0);
+              acaocompleta = true;
               break;
             default:
               System.out.println("Acao invalida.");
@@ -154,6 +159,9 @@ public class App {
       while(!acaocompleta);
       if(uno.verificaVitoria()){ //se alguem obtem vitoria, encerra round
         //pode contar score aqui
+        break;
+      }
+      if(saiJogo){
         break;
       }
       //pesquisar metodo para limpar console
