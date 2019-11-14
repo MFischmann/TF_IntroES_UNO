@@ -158,8 +158,9 @@ public class App {
           }
         }
       while(!acaocompleta);
-      if(uno.verificaVitoria()){ //se alguem obtem vitoria, encerra round
+      if(uno.verificaVitoria()){ //se alguem obteve vitoria, encerra round
         //pode contar score aqui
+        System.out.println("Vitoria do jogador "+uno.getWinner().getNome());
         break;
       }
       if(saiJogo){

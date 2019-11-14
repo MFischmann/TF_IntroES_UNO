@@ -8,22 +8,24 @@ import java.nio.file.Paths;
 
 public class Jogo{
     private Deque deck;
-    private static int IDcounter = 1;
-    private int ID;
+    //private static int IDcounter = 1;
+    //private int ID;
     private DoubleLinkedListOfPlayers jogadores;
+    private Jogador winner;
     private boolean ordemNormal;
     private String currentCor;
     private String currentValor;
     private Card lastCard;
-    private final int initialHandSize = 4;
+    private final int initialHandSize = 1;
     public Jogo(){
         deck = new Deque();
         jogadores = new DoubleLinkedListOfPlayers();
         ordemNormal = true;
-        ID = IDcounter;
-        IDcounter++;
+        //ID = IDcounter;
+        //IDcounter++;
         currentCor = "N/A";
         currentValor = "N/A";
+        winner = null;
     }
 
     /**
@@ -43,9 +45,10 @@ public class Jogo{
     /**
      * @return A ID
      */
+    /*
     public int getID() {
         return ID;
-    }
+    }*/
 
     /**
      * @return Lista jogadores
@@ -71,19 +74,6 @@ public class Jogo{
      */
     public void iniciaJogo(){
         carrega("DequeDefault");
-        Card c = deck.compraCard(); //usa carta aleatoria para inicializar a partida
-        
-        while(c.getValor().equals("+4")){ //enquanto a carta do topo for +4 coringa reembaralha e compra outra carta
-            deck.add(c);
-            c = deck.compraCard();
-        }  
-
-        usaCarta(c);
-        if(c.getCor().equals("Multi")){ //se for coringa tem que resetar p/ jogador inicial
-            inverteOrdem();
-            jogadores.setNextPlayer(ordemNormal); //volta ao jogador original
-            inverteOrdem(); //seta novamente para ordem normal
-        }
 
         for(int i = 0; i < jogadores.size(); i++){ //percorre todos jogadores
             for(int j = 0; j < initialHandSize; j++){ //compra cartas suficientes para compor mao inicial
@@ -92,6 +82,19 @@ public class Jogo{
             jogadores.setNextPlayer(ordemNormal); //pega prox jogador
         }
         jogadores.setCurrentInicial();
+        Card c = deck.compraCard(); //usa carta aleatoria para inicializar a partida
+        
+        while(c.getValor().equals("+4")){ //enquanto a carta do topo for +4 coringa reembaralha e compra outra carta
+            deck.add(c);
+            c = deck.compraCard();
+        }  
+        usaCarta(c);
+        if(c.getCor().equals("Multi")){ //se for coringa tem que resetar p/ jogador inicial
+            inverteOrdem();
+            jogadores.setNextPlayer(ordemNormal); //volta ao jogador original
+            inverteOrdem(); //seta novamente para ordem normal
+        }
+
     }
     /**
      * Salva o jogo atual
@@ -229,6 +232,9 @@ public class Jogo{
                 setCurrentCor();
                 currentValor = "N/A";
             }
+            if(jogadores.getCurrentPlayer().getHand().isEmpty()){
+                winner = jogadores.getCurrentPlayer();
+            }
 
             if(carta.getValor().equals("Inverte")){
                 if(jogadores.size()==2){
@@ -351,6 +357,16 @@ public class Jogo{
      * @return true se a mao do jogador estiver vazia, false se nao estiver
      */
     public boolean verificaVitoria(){
-        return jogadores.getCurrentPlayer().getHand().isEmpty();
+        if(winner != null){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @return the winner
+     */
+    public Jogador getWinner() {
+        return winner;
     }
 }
