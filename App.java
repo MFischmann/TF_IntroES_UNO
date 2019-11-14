@@ -71,7 +71,7 @@ public class App {
     System.out.println("Ultima carta jogada: "+last);
     if(last.getCor().equals("Multi")){
       System.out.println("Cor escolhida: "+uno.getCurrentCor());
-    }
+    } 
   }
   private void menuJogo(){
     boolean podePular;
@@ -174,6 +174,7 @@ public class App {
 
   private boolean salvaJogo(){
     //TODO
+    uno.salva();
     return true; //temp
   }
 }

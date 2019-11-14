@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -91,7 +92,22 @@ public class Jogo{
             jogadores.setNextPlayer(ordemNormal); //pega prox jogador
         }
     }
-    
+    public void salva(){
+        String fileName = "JogoUno"+ID+".txt";
+        String currDir = Paths.get("").toAbsolutePath().toString();
+        String nameComplete = currDir+"\\"+fileName;
+        Path path = Paths.get(nameComplete);
+        try (PrintWriter writer = new PrintWriter(Files.newBufferedWriter(path, StandardCharsets.UTF_8))){
+            writer.println("Deque");
+            for(Card c:deck){
+                String linha = c.getValor()+","+c.getCor();
+                writer.println(linha);
+            }
+            writer.println(";");
+        }catch (IOException x){
+          System.err.format("Erro de E/S: %s%n", x);
+      }        
+    }
     /**
      * Realiza leitura de arquivo para carregar deque, jogadores e mao dos jogadores.
      * @param string nome do arquivo a ser lido
