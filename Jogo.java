@@ -92,6 +92,9 @@ public class Jogo{
             jogadores.setNextPlayer(ordemNormal); //pega prox jogador
         }
     }
+    /**
+     * Salva o jogo atual
+     */
     public void salva(){
         String fileName = "JogoUno"+ID+".txt";
         String currDir = Paths.get("").toAbsolutePath().toString();
@@ -117,10 +120,17 @@ public class Jogo{
                 writer.println(";");
                 jogadores.setNextPlayer(ordemNormal);
             }
+            writer.println("LastCard");
+            String linha = lastCard.getValor()+","+lastCard.getCor();
+            writer.println(linha);
+            if(lastCard.getCor().equals("Multi")){
+                writer.println(currentCor);
+            }
         }catch (IOException x){
           System.err.format("Erro de E/S: %s%n", x);
       }        
     }
+
     /**
      * Realiza leitura de arquivo para carregar deque, jogadores e mao dos jogadores.
      * @param string nome do arquivo a ser lido
@@ -133,22 +143,13 @@ public class Jogo{
         String nameComplete = currDir+"\\"+fileName+".txt";
         // Cria acesso ao "diretorio" da mídia (disco)
         Path path = Paths.get(nameComplete);
-        // Usa a classe scanner para fazer a leitura do arquivo
-        /*
-        try (Scanner sc = new Scanner(Files.newBufferedReader(path, StandardCharsets.UTF_8))){
-            sc.useDelimiter("[;\n]"); // separadores: ; e nova linha
-            while (sc.hasNext()) {
-
-            }
-
-        }
-        */
+        Jogador newPlayer;
         try (Scanner sc = new Scanner(Files.newBufferedReader(path, StandardCharsets.UTF_8))){
             sc.useDelimiter("[\n]"); // separador:
             while (sc.hasNext()) {
                 line = sc.next().trim();
                 if(line.equals("Deque")){//adiciona ao deque
-                    System.out.println("A");
+                    System.out.println("Carregando deque.");
                     line = sc.next().trim();
                     while(sc.hasNext()&&!line.equals(";")){
                         String[] componente = line.split(",");
@@ -156,12 +157,39 @@ public class Jogo{
                         line = sc.next().trim();
                     }
                 }
+                else if(line.equals("LastCard")){
+                    System.out.println("Carregando ultima carta jogada.");
+                    line = sc.next().trim();
+                    String[] componente = line.split(",");
+                    lastCard = new Card(componente[0], componente[1]);
+                    currentCor = lastCard.getCor();
+                    currentValor = lastCard.getValor();
+                    if(currentCor.equals("Multi")){
+                        line = sc.next().trim();
+                        currentCor = line;
+                    }
+                }
                 else{//Adiciona jogador e mao
                     //TODO
+                    System.out.println("Carregando jogador "+line);
+                    jogadores.add(new Jogador(line));
+                    if(jogadores.size() == 1){
+                        jogadores.setCurrentInicial();
+                    }
+                    else{
+                        jogadores.setNextPlayer(ordemNormal);
+                    }
+                    newPlayer = jogadores.getCurrentPlayer();
+                    line = sc.next().trim();
+                    while(sc.hasNext()&&!line.equals(";")){
+                        String[] componente = line.split(",");
+                        newPlayer.getHand().add(new Card(componente[0], componente[1]));
+                        line = sc.next().trim();
+                    }
 
                 }
             }
-
+            jogadores.setCurrentInicial();
         }
         catch (IOException x){
             System.err.format("Erro de E/S: %s%n", x);

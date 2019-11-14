@@ -170,6 +170,8 @@ public class App {
   }
   private void carregaJogo(){
     //TODO
+    uno.carrega("JogoUno1");
+    menuJogo();
   }
 
   private boolean salvaJogo(){
