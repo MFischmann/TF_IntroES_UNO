@@ -104,6 +104,19 @@ public class Jogo{
                 writer.println(linha);
             }
             writer.println(";");
+            Jogador currentP;
+            DoubleLinkedListOfCards currentHand;
+            for(int i = 0; i < jogadores.size(); i++){
+                currentP = jogadores.getCurrentPlayer();
+                writer.println(currentP.getNome());
+                currentHand = currentP.getHand();
+                for (Card c : currentHand) {
+                    String linha = c.getValor()+","+c.getCor();
+                    writer.println(linha);
+                }
+                writer.println(";");
+                jogadores.setNextPlayer(ordemNormal);
+            }
         }catch (IOException x){
           System.err.format("Erro de E/S: %s%n", x);
       }        
