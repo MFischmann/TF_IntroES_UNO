@@ -96,8 +96,8 @@ public class Jogo{
     /**
      * Salva o jogo atual
      */
-    public String salva(){
-        String fileName = "JogoUno"+ID+".txt";
+    public String salva(String fileName){
+        fileName = fileName+".txt";
         String currDir = Paths.get("").toAbsolutePath().toString();
         String nameComplete = currDir+"\\"+fileName;
         Path path = Paths.get(nameComplete);
@@ -127,12 +127,11 @@ public class Jogo{
             if(lastCard.getCor().equals("Multi")){
                 writer.println(currentCor);
             }
+            return fileName;
         }catch (IOException x){
           System.err.format("Erro de E/S: %s%n", x);
+          return "Erro";
       }        
-      finally{
-          return fileName;
-      }
     }
 
     /**

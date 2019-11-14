@@ -27,6 +27,7 @@ public class App {
         System.out.println("Bem vindo ao jogo de Uno. \nDigite a opcao desejada:");
         System.out.println("1: Inicializar novo jogo.\n2: Carregar um jogo salvo.\n3: Finalizar programa.");
         opcao = scan.nextInt();
+        scan.nextLine();
         switch(opcao){
           case 1:
             inicializaJogo();
@@ -178,10 +179,10 @@ public class App {
   }
   private void carregaJogo(){
     uno = new Jogo();
-    System.out.println("Digite o ID do jogo a ser carregado.");
-    int inID = scan.nextInt();
-    scan.nextLine();
-    if(uno.carrega("JogoUno"+inID)){
+    System.out.println("Digite o nome do jogo a ser carregado.");
+    String loadName = scan.nextLine().trim();
+    boolean loaded = uno.carrega(loadName);
+    if(loaded){
       menuJogo();
     }
     else{
@@ -191,8 +192,9 @@ public class App {
   }
 
   private boolean salvaJogo(){
-    System.out.println("Salvando jogo.");
-    String fileName = uno.salva();
+    System.out.println("Salvando jogo. Digite nome do arquivo.");
+    String fileName = scan.nextLine().trim();
+    fileName = uno.salva(fileName);
     System.out.println("Jogo salvo no arquivo "+fileName);
     while(true){
       System.out.println("Deseja continuar jogando? (S/N)");
