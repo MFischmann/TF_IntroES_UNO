@@ -177,7 +177,6 @@ public class App {
     }
   }
   private void carregaJogo(){
-    //TODO
     uno = new Jogo();
     System.out.println("Digite o ID do jogo a ser carregado.");
     int inID = scan.nextInt();
@@ -192,10 +191,19 @@ public class App {
   }
 
   private boolean salvaJogo(){
-    //TODO
     System.out.println("Salvando jogo.");
     String fileName = uno.salva();
     System.out.println("Jogo salvo no arquivo "+fileName);
-    return true; //temp
+    while(true){
+      System.out.println("Deseja continuar jogando? (S/N)");
+      String ans = scan.nextLine().trim();
+      if(ans.equals("S")){
+        return true;
+      }
+      else if(ans.equals("N")){
+        return false;
+      }
+      System.out.println("Comando nao reconhecido");
+    }
   }
 }

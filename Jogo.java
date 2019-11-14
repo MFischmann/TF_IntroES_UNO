@@ -174,7 +174,6 @@ public class Jogo{
                     }
                 }
                 else{//Adiciona jogador e mao
-                    //TODO
                     System.out.println("Carregando jogador "+line);
                     jogadores.add(new Jogador(line));
                     if(jogadores.size() == 1){
