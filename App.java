@@ -6,7 +6,6 @@ public class App {
     private Jogo uno;
     public App(){
       scan = new Scanner(System.in);
-      uno = new Jogo();
     }
     public static void main(String[] args) {
       App app = new App();
@@ -48,6 +47,7 @@ public class App {
     }
     
   private void inicializaJogo(){
+    uno = new Jogo();
     int qtdJogadores;
     do{
       System.out.println("Digite numero de jogadores (minimo 2 e maximo 8): ");
@@ -178,6 +178,7 @@ public class App {
   }
   private void carregaJogo(){
     //TODO
+    uno = new Jogo();
     System.out.println("Digite o ID do jogo a ser carregado.");
     int inID = scan.nextInt();
     scan.nextLine();
@@ -192,7 +193,9 @@ public class App {
 
   private boolean salvaJogo(){
     //TODO
-    uno.salva();
+    System.out.println("Salvando jogo.");
+    String fileName = uno.salva();
+    System.out.println("Jogo salvo no arquivo "+fileName);
     return true; //temp
   }
 }

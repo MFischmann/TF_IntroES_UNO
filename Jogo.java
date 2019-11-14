@@ -91,11 +91,12 @@ public class Jogo{
             }
             jogadores.setNextPlayer(ordemNormal); //pega prox jogador
         }
+        jogadores.setCurrentInicial();
     }
     /**
      * Salva o jogo atual
      */
-    public void salva(){
+    public String salva(){
         String fileName = "JogoUno"+ID+".txt";
         String currDir = Paths.get("").toAbsolutePath().toString();
         String nameComplete = currDir+"\\"+fileName;
@@ -129,6 +130,9 @@ public class Jogo{
         }catch (IOException x){
           System.err.format("Erro de E/S: %s%n", x);
       }        
+      finally{
+          return fileName;
+      }
     }
 
     /**
