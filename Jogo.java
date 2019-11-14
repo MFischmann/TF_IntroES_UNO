@@ -89,12 +89,7 @@ public class Jogo{
             c = deck.compraCard();
         }  
         usaCarta(c);
-        if(c.getCor().equals("Multi")){ //se for coringa tem que resetar p/ jogador inicial
-            inverteOrdem();
-            jogadores.setNextPlayer(ordemNormal); //volta ao jogador original
-            inverteOrdem(); //seta novamente para ordem normal
-        }
-
+        jogadores.setCurrentInicial();
     }
     /**
      * Salva o jogo atual
@@ -116,6 +111,7 @@ public class Jogo{
             for(int i = 0; i < jogadores.size(); i++){
                 currentP = jogadores.getCurrentPlayer();
                 writer.println(currentP.getNome());
+                writer.println(currentP.getScore());
                 currentHand = currentP.getHand();
                 for (Card c : currentHand) {
                     String linha = c.getValor()+","+c.getCor();
@@ -144,6 +140,8 @@ public class Jogo{
     public boolean carrega(String fileName) {
         System.out.println("Inicializando leitura do arquivo "+fileName);
         String line;
+        String nomeP;
+        int scoreP;
         String currDir = Paths.get("").toAbsolutePath().toString();
         // Monta o nome do arquivo
         String nameComplete = currDir+"\\"+fileName+".txt";
@@ -177,7 +175,10 @@ public class Jogo{
                 }
                 else{//Adiciona jogador e mao
                     System.out.println("Carregando jogador "+line);
-                    jogadores.add(new Jogador(line));
+                    nomeP = line;
+                    line = sc.next().trim();
+                    scoreP = Integer.parseInt(line);
+                    jogadores.add(new Jogador(nomeP, scoreP));
                     if(jogadores.size() == 1){
                         jogadores.setCurrentInicial();
                     }
@@ -348,6 +349,7 @@ public class Jogo{
 
     public void adicionaScore(){
         //TODO
+        winner.addWin();
     }
     public void printScore(){
         //TODO
@@ -358,6 +360,7 @@ public class Jogo{
      */
     public boolean verificaVitoria(){
         if(winner != null){
+            adicionaScore();
             return true;
         }
         return false;
