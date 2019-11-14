@@ -163,7 +163,14 @@ public class App {
         Jogador w = uno.getWinner();
         System.out.println("Vitoria do jogador "+w.getNome());
         System.out.println("Score atual do jogador: "+w.getScore());
-        break;
+        System.out.println("Jogar novamente? (S/N)");
+        if(simNao()){
+          uno.reinicia();
+        }
+        else{
+          break;
+        }
+        
       }
       if(saiJogo){
         break;
@@ -193,22 +200,25 @@ public class App {
     }
     
   }
+  private boolean simNao(){
+    while(true){
+      String ans = scan.nextLine().trim();
+        if(ans.equals("S")){
+          return true;
+        }
+        else if(ans.equals("N")){
+          return false;
+        }
+      }
+  }
 
   private boolean salvaJogo(){
     System.out.println("Salvando jogo. Digite nome do arquivo.");
     String fileName = scan.nextLine().trim();
     fileName = uno.salva(fileName);
     System.out.println("Jogo salvo no arquivo "+fileName);
-    while(true){
       System.out.println("Deseja continuar jogando? (S/N)");
-      String ans = scan.nextLine().trim();
-      if(ans.equals("S")){
-        return true;
-      }
-      else if(ans.equals("N")){
-        return false;
-      }
-      System.out.println("Comando nao reconhecido");
-    }
+      return simNao();
+    
   }
 }

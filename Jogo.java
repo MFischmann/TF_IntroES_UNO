@@ -354,6 +354,18 @@ public class Jogo{
     public void printScore(){
         //TODO
     }
+
+    public void reinicia(){
+        winner = null;
+        deck.clear();
+        for(int i = 0; i < jogadores.size(); i++){
+            jogadores.getCurrentPlayer().getHand().clear();
+            jogadores.setNextPlayer(ordemNormal);
+        }
+        currentCor = "N/A";
+        currentValor = "N/A";
+        iniciaJogo();
+    }
     /**
      * Verifica se o jogador atual ganhou
      * @return true se a mao do jogador estiver vazia, false se nao estiver
