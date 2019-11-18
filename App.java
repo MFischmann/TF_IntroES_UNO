@@ -202,10 +202,10 @@ public class App {
   private boolean simNao(){
     while(true){
       String ans = scan.nextLine().trim();
-        if(ans.equals("S")){
+        if(ans.equalsIgnoreCase("S")){
           return true;
         }
-        else if(ans.equals("N")){
+        else if(ans.equalsIgnoreCase("N")){
           return false;
         }
       }
