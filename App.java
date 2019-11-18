@@ -94,15 +94,22 @@ public class App {
               System.out.println("Qual carta (digite numero) deve ser jogada?");
               printCurrentHand();
               int index = scan.nextInt();
-              acaocompleta = uno.tentaCarta(index);
-              if(acaocompleta){
-                System.out.println("Carta jogada com sucesso.");
-              }
-              else{
-                System.out.println("Carta nao valida.");
-                //pode chamar penalidade
-              }
-            break;
+                try {
+                  acaocompleta = uno.tentaCarta(index);
+                  if(acaocompleta){
+                    System.out.println("Carta jogada com sucesso.");
+                  }
+                  else{
+                    System.out.println("Carta nao valida.");
+                    //pode chamar penalidade
+                  }
+                } catch (IndexOutOfBoundsException e) {
+                  //TODO: handle exception
+                  System.out.println("Numero invalido de carta.");
+                }
+
+              //}
+              break;
               case 2:
                 if(uno.compraCarta()){
                   int lastIndex = uno.getJogadores().getCurrentPlayer().getHand().size()-1;
