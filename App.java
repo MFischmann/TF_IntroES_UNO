@@ -105,6 +105,7 @@ public class App {
             case 1:
               System.out.println("\nQual carta (digite numero) deve ser jogada?");
               printCurrentHand();
+              printLastCard();
               int index = numberReader();
                 try {
                   acaocompleta = uno.tentaCarta(index);
