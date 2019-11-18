@@ -51,7 +51,7 @@ public class App {
     uno = new Jogo();
     int qtdJogadores;
     do{
-      System.out.println("Digite numero de jogadores (minimo 2 e maximo 8): ");
+      System.out.println("\nDigite numero de jogadores (minimo 2 e maximo 8): ");
       qtdJogadores = scan.nextInt();
       scan.nextLine();
     }
@@ -59,11 +59,11 @@ public class App {
 
     String nomes;
     for(int i = 1; i <= qtdJogadores; i++){ //inicializa jogadores
-      System.out.println("Digite nome do jogador "+ i+": ");
+      System.out.println("\nDigite nome do jogador "+ i+": ");
       nomes = scan.nextLine();
       uno.addJogador(nomes);
     }
-      System.out.println("Jogo sera inicializado agora.");
+      System.out.println("\n \nJogo sera inicializado agora.");
       uno.iniciaJogo();
       menuJogo();
   }
@@ -81,7 +81,7 @@ public class App {
       boolean acaocompleta = false;
       podePular = false;
       int acao;
-      System.out.println("Turno do jogador "+uno.getJogadores().getCurrentPlayer().getNome());
+      System.out.println("\n \nTurno do jogador "+uno.getJogadores().getCurrentPlayer().getNome());
      
       printCurrentHand();
       do{
@@ -91,7 +91,7 @@ public class App {
         scan.nextLine();
         switch(acao){
             case 1:
-              System.out.println("Qual carta (digite numero) deve ser jogada?");
+              System.out.println("\nQual carta (digite numero) deve ser jogada?");
               printCurrentHand();
               int index = scan.nextInt();
                 try {
@@ -104,7 +104,6 @@ public class App {
                     //pode chamar penalidade
                   }
                 } catch (IndexOutOfBoundsException e) {
-                  //TODO: handle exception
                   System.out.println("Numero invalido de carta.");
                 }
 
