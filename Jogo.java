@@ -1,10 +1,18 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Jogo{
     private Deque deck;
-    private static int IDcounter = 1;
-    private int ID;
+    //private static int IDcounter = 7;
+    //private int ID;
     private DoubleLinkedListOfPlayers jogadores;
+    private Jogador winner;
     private boolean ordemNormal;
     private String currentCor;
     private String currentValor;
@@ -14,10 +22,11 @@ public class Jogo{
         deck = new Deque();
         jogadores = new DoubleLinkedListOfPlayers();
         ordemNormal = true;
-        ID = IDcounter;
-        IDcounter++;
+        //ID = IDcounter;
+        //IDcounter++;
         currentCor = "N/A";
         currentValor = "N/A";
+        winner = null;
     }
 
     /**
@@ -37,9 +46,10 @@ public class Jogo{
     /**
      * @return A ID
      */
+    /*
     public int getID() {
         return ID;
-    }
+    }*/
 
     /**
      * @return Lista jogadores
@@ -64,37 +74,154 @@ public class Jogo{
      * Inicializa um jogo do zero
      */
     public void iniciaJogo(){
+        carrega("DequeDefault");
 
-        Card c = deck.compraCard(); //usa carta aleatoria para inicializar a partida
-        
-        while(c.getValor().equals("+4")){ //enquanto a carta do topo for +4 coringa reembaralha e compra outra carta
-            deck.add(c);
-            c = deck.compraCard();
-        }  
-
-        usaCarta(c);
-        if(c.getCor().equals("Multi")){ //se for coringa tem que resetar p/ jogador inicial
-            inverteOrdem();
-            jogadores.setNextPlayer(ordemNormal); //volta ao jogador original
-            inverteOrdem(); //seta novamente para ordem normal
-        }
-
-        Card compra;
         for(int i = 0; i < jogadores.size(); i++){ //percorre todos jogadores
             for(int j = 0; j < initialHandSize; j++){ //compra cartas suficientes para compor mao inicial
-                compra = deck.compraCard(); 
-                jogadores.getCurrentPlayer().getHand().add(compra);
+                    compraCarta();
             }
             jogadores.setNextPlayer(ordemNormal); //pega prox jogador
         }
-
-        jogadores.setNextPlayer(ordemNormal); //volta ao jogador inicial
+        jogadores.setCurrentInicial();
+        Card c = deck.compraCard(); //usa carta aleatoria para inicializar a partida
+        
+        while(c.getCor().equals("Multi")){ //enquanto a carta do topo for coringa reembaralha e compra outra carta
+            deck.add(c);
+            c = deck.compraCard();
+        }  
+        //usaCarta(c);
+        currentCor = c.getCor();
+        currentValor = c.getValor();
+        lastCard = c;
+        jogadores.setCurrentInicial();
+    }
+    /**
+     * Salva o jogo atual
+     */
+    public String salva(String fileName){
+        fileName = fileName+".txt";
+        String currDir = Paths.get("").toAbsolutePath().toString();
+        String nameComplete = currDir+"\\"+fileName;
+        Path path = Paths.get(nameComplete);
+        try (PrintWriter writer = new PrintWriter(Files.newBufferedWriter(path, StandardCharsets.UTF_8))){
+            writer.println("Deque");
+            for(Card c:deck){
+                String linha = c.getValor()+","+c.getCor();
+                writer.println(linha);
+            }
+            writer.println(";");
+            Jogador currentP;
+            DoubleLinkedListOfCards currentHand;
+            for(int i = 0; i < jogadores.size(); i++){
+                currentP = jogadores.getCurrentPlayer();
+                writer.println(currentP.getNome());
+                writer.println(currentP.getScore());
+                currentHand = currentP.getHand();
+                for (Card c : currentHand) {
+                    String linha = c.getValor()+","+c.getCor();
+                    writer.println(linha);
+                }
+                writer.println(";");
+                jogadores.setNextPlayer(ordemNormal);
+            }
+            writer.println("LastCard");
+            String linha = lastCard.getValor()+","+lastCard.getCor();
+            writer.println(linha);
+            if(lastCard.getCor().equals("Multi")){
+                writer.println(currentCor);
+            }
+            return fileName;
+        }catch (IOException x){
+          System.err.format("Erro de E/S: %s%n", x);
+          return "Erro";
+      }        
     }
 
-    public void compraCarta(){
+    /**
+     * Realiza leitura de arquivo para carregar deque, jogadores e mao dos jogadores.
+     * @param string nome do arquivo a ser lido
+     */
+    public boolean carrega(String fileName) {
+        System.out.println("Inicializando leitura do arquivo "+fileName);
+        String line;
+        String nomeP;
+        int scoreP;
+        String currDir = Paths.get("").toAbsolutePath().toString();
+        // Monta o nome do arquivo
+        String nameComplete = currDir+"\\"+fileName+".txt";
+        // Cria acesso ao "diretorio" da mídia (disco)
+        Path path = Paths.get(nameComplete);
+        Jogador newPlayer;
+        try (Scanner sc = new Scanner(Files.newBufferedReader(path, StandardCharsets.UTF_8))){
+            sc.useDelimiter("[\n]"); // separador:
+            while (sc.hasNext()) {
+                line = sc.next().trim();
+                if(line.equals("Deque")){//adiciona ao deque
+                    System.out.println("Carregando deque.");
+                    line = sc.next().trim();
+                    while(sc.hasNext()&&!line.equals(";")){
+                        String[] componente = line.split(",");
+                        deck.add(new Card(componente[0], componente[1]));
+                        line = sc.next().trim();
+                    }
+                }
+                else if(line.equals("LastCard")){
+                    System.out.println("Carregando ultima carta jogada.");
+                    line = sc.next().trim();
+                    String[] componente = line.split(",");
+                    lastCard = new Card(componente[0], componente[1]);
+                    currentCor = lastCard.getCor();
+                    currentValor = lastCard.getValor();
+                    if(currentCor.equals("Multi")){
+                        line = sc.next().trim();
+                        currentCor = line;
+                    }
+                }
+                else{//Adiciona jogador e mao
+                    System.out.println("Carregando jogador "+line);
+                    nomeP = line;
+                    line = sc.next().trim();
+                    scoreP = Integer.parseInt(line);
+                    jogadores.add(new Jogador(nomeP, scoreP));
+                    if(jogadores.size() == 1){
+                        jogadores.setCurrentInicial();
+                    }
+                    else{
+                        jogadores.setNextPlayer(ordemNormal);
+                    }
+                    newPlayer = jogadores.getCurrentPlayer();
+                    line = sc.next().trim();
+                    while(sc.hasNext()&&!line.equals(";")){
+                        String[] componente = line.split(",");
+                        newPlayer.getHand().add(new Card(componente[0], componente[1]));
+                        line = sc.next().trim();
+                    }
+
+                }
+            }
+            jogadores.setCurrentInicial();
+            return true;
+        }
+        catch (IOException x){
+            System.err.format("Erro de E/S: %s%n", x);
+            return false;
+        }
+    }
+
+    /**
+     * Tenta comprar carta para jogador atual
+     * 
+     * @return true se pode comprar, false se deck vazio
+     */
+    public boolean compraCarta(){
+        if(deck.isEmpty()){
+            System.out.println("Deck vazio.");
+            return false;
+        }
         Jogador atual = jogadores.getCurrentPlayer();
         Card topo = deck.compraCard();
         atual.getHand().add(topo);
+        return true;
     }
     /**
      * Tenta jogar a carta e aplica efeitos
@@ -110,21 +237,28 @@ public class Jogo{
                 setCurrentCor();
                 currentValor = "N/A";
             }
+            if(jogadores.getCurrentPlayer().getHand().isEmpty()){
+                winner = jogadores.getCurrentPlayer();
+            }
 
             if(carta.getValor().equals("Inverte")){
-                inverteOrdem();
+                if(jogadores.size()==2){
+                    pulaTurno();
+                }
+                else{
+                    inverteOrdem();
+                }
             }
 
             if(carta.getValor().equals("Pula")){
-                jogadores.setNextPlayer(ordemNormal);
+                pulaTurno();
             }
 
             jogadores.setNextPlayer(ordemNormal); //Acoes antes desta linha precisam ocorrer antes de ir para prox jogador
 
             if(carta.getValor().equals("+2")){
                 for(int i = 0; i < 2; i++){
-                    Card aux = deck.compraCard();
-                    jogadores.getCurrentPlayer().getHand().add(aux);
+                    compraCarta();
                 }
 
                 jogadores.setNextPlayer(ordemNormal);
@@ -132,8 +266,7 @@ public class Jogo{
 
             if(carta.getValor().equals("+4")){
                 for(int i = 0; i < 4; i++){
-                    Card aux = deck.compraCard();
-                    jogadores.getCurrentPlayer().getHand().add(aux);
+                    compraCarta();
                 }
 
                 jogadores.setNextPlayer(ordemNormal);
@@ -143,11 +276,14 @@ public class Jogo{
 
         return false;
     }
+    public void pulaTurno(){
+        jogadores.setNextPlayer(ordemNormal);
+    }
 
     public boolean tentaCarta(int index){
-        Card carta = getJogadores().getCurrentPlayer().getHand().getCard(index);
+        Card carta = getJogadores().getCurrentPlayer().getHand().getCard(index-1);
         if(ehValida(carta)){
-            getJogadores().getCurrentPlayer().getHand().remove(index);
+            getJogadores().getCurrentPlayer().getHand().remove(index-1);
         }
         return usaCarta(carta);
     }
@@ -167,37 +303,48 @@ public class Jogo{
 
         return false;
     }
-
+    /**
+     * @return the currentCor
+     */
+    public String getCurrentCor() {
+        return currentCor;
+    }
     public void setCurrentCor(){
         Scanner sCor = new Scanner(System.in);
         boolean confirm = false;
         do{
             System.out.println("Escolha (digite numero) a cor atual:\n1: Amarelo \n2: Azul \n3: Verde \n4: Vermelho");
-            int novaCor = sCor.nextInt();
-            switch(novaCor){
-                case 1:
-                    currentCor = "Amerelo";
-                    confirm = true;
-                    break;
-                case 2:
-                    currentCor = "Azul";
-                    confirm = true;
-                    break;
-                case 3:
-                    currentCor = "Verde";
-                    confirm = true;
-                    break;
-                case 4:
-                    currentCor = "Vermelho";
-                    confirm = true;
-                    break;
-                default:
-                    System.out.println("Opcao inexistente.");
+            try {
+                int novaCor = sCor.nextInt();
+                sCor.nextLine();
+                switch(novaCor){
+                    case 1:
+                        currentCor = "Amarelo";
+                        confirm = true;
+                        break;
+                    case 2:
+                        currentCor = "Azul";
+                        confirm = true;
+                        break;
+                    case 3:
+                        currentCor = "Verde";
+                        confirm = true;
+                        break;
+                    case 4:
+                        currentCor = "Vermelho";
+                        confirm = true;
+                        break;
+                    default:
+                        System.out.println("Opcao inexistente.");
+                }
+            } catch (InputMismatchException e) {
+                sCor.next();
+                System.out.println("\nFavor digitar numero.\n");
             }
         }
         while(!confirm);
         System.out.println("Cor escolhida: "+ currentCor);
-        sCor.close();
+        //sCor.close();
     }
 
     public void addJogador(String nome){
@@ -211,15 +358,39 @@ public class Jogo{
 
     public void adicionaScore(){
         //TODO
+        winner.addWin();
     }
     public void printScore(){
         //TODO
+    }
+
+    public void reinicia(){
+        winner = null;
+        deck.clear();
+        for(int i = 0; i < jogadores.size(); i++){
+            jogadores.getCurrentPlayer().getHand().clear();
+            jogadores.setNextPlayer(ordemNormal);
+        }
+        currentCor = "N/A";
+        currentValor = "N/A";
+        iniciaJogo();
     }
     /**
      * Verifica se o jogador atual ganhou
      * @return true se a mao do jogador estiver vazia, false se nao estiver
      */
     public boolean verificaVitoria(){
-        return jogadores.getCurrentPlayer().getHand().isEmpty();
+        if(winner != null){
+            adicionaScore();
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @return the winner
+     */
+    public Jogador getWinner() {
+        return winner;
     }
 }
