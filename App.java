@@ -94,11 +94,11 @@ public class App {
       boolean acaocompleta = false;
       podePular = false;
       int acao;
-      System.out.println("\n \nTurno do jogador "+uno.getJogadores().getCurrentPlayer().getNome());
+      System.out.println("\n \n \nTurno do jogador "+uno.getJogadores().getCurrentPlayer().getNome());
      
       printCurrentHand();
       do{
-        System.out.println("Escolha uma opcao: \n1: Jogar uma carta.\n2: Comprar carta. \n3: Pular turno. \n4: Salvar Jogo.\n5: Encerrar jogo sem salvar.");
+        System.out.println("\nEscolha uma opcao: \n1: Jogar uma carta.\n2: Comprar carta. \n3: Pular turno. \n4: Salvar Jogo.\n5: Encerrar jogo sem salvar.");
         printLastCard();
         acao = numberReader();
         switch(acao){
@@ -122,25 +122,17 @@ public class App {
               //}
               break;
               case 2:
-                if(uno.compraCarta()){
-                  int lastIndex = uno.getJogadores().getCurrentPlayer().getHand().size()-1;
-                  Card compra = uno.getJogadores().getCurrentPlayer().getHand().getCard(lastIndex);
-                  System.out.println("Carta comprada: "+compra);
-                  /*
-                  if(uno.ehValida(compra)){
-                    acaocompleta = uno.tentaCarta(uno.getJogadores().getCurrentPlayer().getHand().size()-1);
-                    //utiliza ultima carta
-                    if(acaocompleta){
-                      System.out.println("Carta jogada com sucesso.");
-                    }
-                    else{
-                      System.out.println("Carta nao valida.");
-                      //pode chamar penalidade
-                    }
+                if(!podePular){
+                  if(uno.compraCarta()){
+                    int lastIndex = uno.getJogadores().getCurrentPlayer().getHand().size()-1;
+                    Card compra = uno.getJogadores().getCurrentPlayer().getHand().getCard(lastIndex);
+                    System.out.println("Carta comprada: "+compra);
+                  }
+                  podePular = true;
                 }
-                */
-              }
-              podePular = true;
+                else{
+                  System.out.println("Carta ja foi comprada.");
+                }
               break;
           
             case 3:
