@@ -85,11 +85,14 @@ public class Jogo{
         jogadores.setCurrentInicial();
         Card c = deck.compraCard(); //usa carta aleatoria para inicializar a partida
         
-        while(c.getValor().equals("+4")){ //enquanto a carta do topo for +4 coringa reembaralha e compra outra carta
+        while(c.getCor().equals("Multi")){ //enquanto a carta do topo for coringa reembaralha e compra outra carta
             deck.add(c);
             c = deck.compraCard();
         }  
-        usaCarta(c);
+        //usaCarta(c);
+        currentCor = c.getCor();
+        currentValor = c.getValor();
+        lastCard = c;
         jogadores.setCurrentInicial();
     }
     /**
