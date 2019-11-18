@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class App {
@@ -26,8 +27,7 @@ public class App {
       do{
         System.out.println("Bem vindo ao jogo de Uno. \nDigite a opcao desejada:");
         System.out.println("1: Inicializar novo jogo.\n2: Carregar um jogo salvo.\n3: Finalizar programa.");
-        opcao = scan.nextInt();
-        scan.nextLine();
+        opcao = numberReader();
         switch(opcao){
           case 1:
             inicializaJogo();
@@ -52,8 +52,7 @@ public class App {
     int qtdJogadores;
     do{
       System.out.println("\nDigite numero de jogadores (minimo 2 e maximo 8): ");
-      qtdJogadores = scan.nextInt();
-      scan.nextLine();
+      qtdJogadores = numberReader();
     }
     while(qtdJogadores < 2 || qtdJogadores > 8);
 
@@ -74,6 +73,20 @@ public class App {
       System.out.println("Cor escolhida: "+uno.getCurrentCor());
     } 
   }
+
+  private int numberReader(){
+    int aux;
+    try {
+      aux = scan.nextInt();
+      scan.nextLine();
+      return aux;
+    } catch (InputMismatchException e) {
+      scan.next();
+      System.out.println("\nFavor digitar numero.\n");
+      aux = -1;
+      return aux;
+    }
+  }
   private void menuJogo(){
     boolean podePular;
     boolean saiJogo = false;
@@ -87,13 +100,12 @@ public class App {
       do{
         System.out.println("Escolha uma opcao: \n1: Jogar uma carta.\n2: Comprar carta. \n3: Pular turno. \n4: Salvar Jogo.\n5: Encerrar jogo sem salvar.");
         printLastCard();
-        acao = scan.nextInt();
-        scan.nextLine();
+        acao = numberReader();
         switch(acao){
             case 1:
               System.out.println("\nQual carta (digite numero) deve ser jogada?");
               printCurrentHand();
-              int index = scan.nextInt();
+              int index = numberReader();
                 try {
                   acaocompleta = uno.tentaCarta(index);
                   if(acaocompleta){

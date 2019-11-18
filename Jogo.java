@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -310,27 +311,32 @@ public class Jogo{
         boolean confirm = false;
         do{
             System.out.println("Escolha (digite numero) a cor atual:\n1: Amarelo \n2: Azul \n3: Verde \n4: Vermelho");
-            int novaCor = sCor.nextInt();
-            sCor.nextLine();
-            switch(novaCor){
-                case 1:
-                    currentCor = "Amarelo";
-                    confirm = true;
-                    break;
-                case 2:
-                    currentCor = "Azul";
-                    confirm = true;
-                    break;
-                case 3:
-                    currentCor = "Verde";
-                    confirm = true;
-                    break;
-                case 4:
-                    currentCor = "Vermelho";
-                    confirm = true;
-                    break;
-                default:
-                    System.out.println("Opcao inexistente.");
+            try {
+                int novaCor = sCor.nextInt();
+                sCor.nextLine();
+                switch(novaCor){
+                    case 1:
+                        currentCor = "Amarelo";
+                        confirm = true;
+                        break;
+                    case 2:
+                        currentCor = "Azul";
+                        confirm = true;
+                        break;
+                    case 3:
+                        currentCor = "Verde";
+                        confirm = true;
+                        break;
+                    case 4:
+                        currentCor = "Vermelho";
+                        confirm = true;
+                        break;
+                    default:
+                        System.out.println("Opcao inexistente.");
+                }
+            } catch (InputMismatchException e) {
+                sCor.next();
+                System.out.println("\nFavor digitar numero.\n");
             }
         }
         while(!confirm);
