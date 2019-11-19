@@ -352,16 +352,8 @@ public class Jogo{
         jogadores.add(temp);
     }
 
-    public void penaliza(){
-        //TODO 
-    }
-
     public void adicionaScore(){
-        //TODO
         winner.addWin();
-    }
-    public void printScore(){
-        //TODO
     }
 
     public void reinicia(){
